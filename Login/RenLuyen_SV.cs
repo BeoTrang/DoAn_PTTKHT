@@ -78,7 +78,26 @@ namespace Login
             DGV.Rows.Add("3.4", "Bỏ sinh hoạt lớp, sinh hoạt Đoàn, sinh hoạt Hội sinh viên theo kế hoạch. (-5/ lần họp).", "0", "3.4", "3.4", "3.4");
             DGV.Rows.Add("3.5", "Không tham các hoạt động do khoa điều động (có danh sách cụ thể). (-5/ lần).", "0", "3.5", "3.5", "3.5");
             DGV.Rows.Add("3.6", "Sinh viên không hoàn thành chương trình tuần sinh hoạt công dân đầu khóa, cuối khóa, đầu năm học. (-10).", "0", "3.6", "3.6", "3.6");
-            DGV.Rows.Add("4123", "ĐÁNH GIÁ VỀ PHẨM CHẤT CÔNG DÂN VÀ QUAN HỆ VỚI CỘNG ĐỒNG: (Khung điểm đánh giá từ 0 - 25 điểm)", "", "", "", "");
+            DGV.Rows.Add("4", "ĐÁNH GIÁ VỀ PHẨM CHẤT CÔNG DÂN VÀ QUAN HỆ VỚI CỘNG ĐỒNG: (Khung điểm đánh giá từ 0 - 25 điểm)", "", "", "", "");
+            DGV.Rows.Add("", "* Phần cộng điểm", "", "", "", "");
+            DGV.Rows.Add("4.1", "Chấp hành tốt và tham gia tuyên truyền các chủ trương của Đảng, chính sách, pháp luật của Nhà nước trong cộng đồng.", "5", "4.1", "4.1", "4.1");
+            DGV.Rows.Add("4.2", "Tham gia hoạt động hỗ trợ nhau trong học tập (Có đăng ký từ đầu kỳ và minh chứng kết quả cụ thể), hoạt động kết nối cộng động (STEM, truyền thông, tuyên truyền tuyển sinh, tham gia đội tự quản…).", "10", "4.2", "4.2", "4.2");
+            DGV.Rows.Add("4.3", "Tham gia công tác tình nguyện, chung sức vì cộng đồng, có tinh thần chia sẻ, giúp đỡ người thân, người có khó khăn, hoạn nạn, các hoạt động tại địa phương nơi cư trú (Tùy mức độ tham gia, có minh chứng cụ thể).", "10", "4.3", "4.3", "4.3");
+            DGV.Rows.Add("4.4", "Giữ gìn đoàn kết nội bộ, quan hệ tốt với bạn bè, tập thể nơi cư trú.", "5", "4.4", "4.4", "4.4");
+            DGV.Rows.Add("", "* Phần trừ điểm", "", "", "", "");
+            DGV.Rows.Add("4.5", "Vi phạm pháp luật (chưa đến mức truy cứu trách nhiệm hình sự), thiếu ý thức tham gia giữ gìn trật tự an toàn xã hội, không chấp hành đầy đủ đường lối, chủ trương của Đảng, chính sách, pháp luật của Nhà nước. (-10).", "0", "4.5", "4.5", "4.5");
+            DGV.Rows.Add("4.6", "Gây mất đoàn kết trong lớp, trong trường, trong KTX, địa bàn nơi cư trú. (-5/ lần).", "0", "4.6", "4.6", "4.6");
+            DGV.Rows.Add("5", "ĐÁNH GIÁ VỀ Ý THỨC VÀ KẾT QUẢ THAM GIA PHỤ TRÁCH LỚP, CÁC ĐOÀN THỂ, TỔ CHỨC TRONG NHÀ TRƯỜNG, HOẶC ĐẠT ĐƯỢC THÀNH TÍCH ĐẶC BIỆT TRONG HỌC TẬP, RÈN LUYÊN CỦA SINH VIÊN (Khung điểm đánh giá từ 0 - 10 điểm)", "10", "0", "0", "0");
+            DGV.Rows.Add("", "* Phần cộng điểm", "", "", "", "");
+            DGV.Rows.Add("5.1", "Sinh viên tham gia cấp ủy chi bộ, Ban chấp hành Đoàn, Hội SV từ cấp chi đoàn, chi hội trở lên hoàn thành tốt nhiệm vụ, có uy tín và hiệu quả trong công việc được phân công.", "5", "5.1", "5.1", "5.1");
+            DGV.Rows.Add("5.2", "Sinh viên tham gia cấp ủy chi bộ, Ban chấp hành Đoàn, Hội SV từ cấp chi đoàn, chi hội trở lên; khi tập thể tham gia, phụ trách được cấp trên khen thưởng.", "3", "5.2", "5.2", "5.2");
+            DGV.Rows.Add("5.3", "Tập thể phụ trách có điểm rèn luyện đạt 85% xếp loại từ khá trở lên.", "2", "5.3", "5.3", "5.3");
+            DGV.Rows.Add("5.4", "* Phần cộng điểm", "10", "5.4", "5.4", "5.4");
+            DGV.Rows.Add("", "* Phần trừ điểm", "", "", "", "");
+            DGV.Rows.Add("5.5", "Không tổ chức thực hiện sinh hoạt tập thể theo kế hoạch của khoa, trường, Đoàn thanh niên, hội sinh viên cấp trên. (-5/ lần).", "0", "5.5", "5.5", "5.5");
+            DGV.Rows.Add("5.6", "Tập thể lớp có điểm rèn luyện dưới 60% đạt loại trung bình trở lên. (-5).", "0", "5.6", "5.6", "5.6");
+
+
         }
     }
 }
