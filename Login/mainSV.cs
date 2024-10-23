@@ -30,6 +30,7 @@ namespace Login
         private void ChucNang_RL_Click(object sender, EventArgs e)
         {
             RenLuyen_SV renLuyen_SV = new RenLuyen_SV();
+            renLuyen_SV.MSV = MSV;
             renLuyen_SV.ShowDialog();
         }
 

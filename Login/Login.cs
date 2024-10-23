@@ -51,6 +51,7 @@ namespace Login
                 LoaiTK = DangNhap;
                 MessageBox.Show("Đăng nhập thành công!");
                 dem_login = 0;
+                TB_pwd.Text = "";
                 if (LoaiTK == "SV")
                 {
                     mainSV mainSV = new mainSV();

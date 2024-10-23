@@ -86,6 +86,7 @@
             this.comboBox_HK.Name = "comboBox_HK";
             this.comboBox_HK.Size = new System.Drawing.Size(267, 29);
             this.comboBox_HK.TabIndex = 3;
+            this.comboBox_HK.SelectedIndexChanged += new System.EventHandler(this.comboBox_HK_SelectedIndexChanged);
             // 
             // label3
             // 

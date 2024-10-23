@@ -4,12 +4,13 @@ using System.Text;
 using System.Data.SqlClient;
 using System.Data;
 using System.Windows.Forms;
+using System.Security.Cryptography;
 
 namespace dll_connectSQL
 {
     public class DataBase_SQL
     {
-        public string cnstr = "Server=NEKOTRANG\\DATASQL;Database=TNUT;User Id=sa;Password=123;";
+        public string cnstr = "Server=NEKOTRANG\\DATASQL;Database=TNUT3;User Id=sa;Password=123;";
         public string Login(string uid, string pwd)
         {
             try
@@ -140,9 +141,97 @@ namespace dll_connectSQL
                 }
             }
         }
-        //public string getGV(string uid)
-        //{
-
-        //}
+        public int[] getDiemSV(int MB_SV)
+        {
+            int[] SV = new int[33];
+            using (SqlConnection conn = new SqlConnection(cnstr))
+            {
+                string query = "SELECT * FROM DG_SV WHERE MB_SV = @MB_SV";
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@MB_SV", MB_SV);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        for (int i = 0; i <= 32; i++)
+                        {
+                            SV[i] = reader.GetInt32(i);
+                        }
+                    }
+                    reader.Close();
+                }
+            }
+            return SV;
+        }
+        public int[] getDiemCVHT(int MB_CVHT)
+        {
+            int[] CVHT = new int[33];
+            using (SqlConnection conn = new SqlConnection(cnstr))
+            {
+                string query = "SELECT * FROM DG_CVHT WHERE MB_CVHT = @MB_CVHT";
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@MB_CVHT", MB_CVHT);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        for (int i = 0; i <= 32; i++)
+                        {
+                            CVHT[i] = reader.GetInt32(i);
+                        }
+                    }
+                    reader.Close();
+                }
+            }
+            return CVHT;
+        }
+        public int[] getDiemKHOA(int MB_KHOA)
+        {
+            int[] KHOA = new int[33];
+            using (SqlConnection conn = new SqlConnection(cnstr))
+            {
+                string query = "SELECT * FROM DG_KHOA WHERE MB_KHOA = @MB_KHOA";
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@MB_KHOA", MB_KHOA);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        for (int i = 0; i <= 32; i++)
+                        {
+                            KHOA[i] = reader.GetInt32(i);
+                        }
+                    }
+                    reader.Close();
+                }
+            }
+            return KHOA;
+        }
+        public (int, int, int) getMaBang(string MSV, string HocKi)
+        {
+            int MB_SV=0, MB_CVHT=0, MB_Khoa=0;
+            using (SqlConnection conn = new SqlConnection(cnstr))
+            {
+                string query = "SELECT MB_SV, MB_CVHT, MB_Khoa FROM Diem_RL WHERE MSV = @MSV AND HocKi = @HocKi";
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@MSV", MSV);
+                    cmd.Parameters.AddWithValue("@HocKi", HocKi);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        MB_SV = reader.GetInt32(0);
+                        MB_CVHT = reader.GetInt32(1);
+                        MB_Khoa = reader.GetInt32(2); 
+                    }
+                    reader.Close();
+                }
+                return (MB_SV, MB_CVHT, MB_Khoa);
+            }    
+        }
     }
 }
