@@ -21,6 +21,7 @@ namespace Login
         public string TenKhoa { get; set; }
         public string MGV { get; set; }
         public string HVT_GV { get; set; }
+        public string LoaiTK { get; set; }
 
         public mainSV()
         {
@@ -31,6 +32,7 @@ namespace Login
         {
             RenLuyen_SV renLuyen_SV = new RenLuyen_SV();
             renLuyen_SV.MSV = MSV;
+            renLuyen_SV.LoaiTK = LoaiTK;
             renLuyen_SV.ShowDialog();
         }
 

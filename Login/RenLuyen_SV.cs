@@ -15,9 +15,16 @@ namespace Login
     {
         public string HocKy {  get; set; }
         public string MSV { get; set; }
+        public string LoaiTK { get; set; }
+        public int[] SV, CVHT, KHOA;
         public RenLuyen_SV()
         {
             InitializeComponent();
+        }
+
+        private void BT_Save_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void RenLuyen_SV_Load(object sender, EventArgs e)
@@ -46,15 +53,27 @@ namespace Login
             DGV.ScrollBars = ScrollBars.Both;
             
 
-            DGV.Columns.Add("STT", "STT");
-            DGV.Columns.Add("STT", "Nội dung tiêu chí đánh giá");
-            DGV.Columns.Add("STT", "Điểm tối đa");
-            DGV.Columns.Add("STT", "Điểm tự đánh giá");
-            DGV.Columns.Add("STT", "Điểm CVHT");
-            DGV.Columns.Add("STT", "Điểm khoa");
-            for (int i = 0; i <= 2; i++)
+            DGV.Columns.Add("0", "STT");
+            DGV.Columns.Add("1", "Nội dung tiêu chí đánh giá");
+            DGV.Columns.Add("2", "Điểm tối đa");
+            DGV.Columns.Add("3", "Điểm tự đánh giá");
+            DGV.Columns.Add("4", "Điểm CVHT");
+            DGV.Columns.Add("5", "Điểm khoa");
+            for (int i = 0; i <= 5; i++)
             {
                 DGV.Columns[i].ReadOnly = true;
+            }
+            if (LoaiTK == "SV")
+            {
+                DGV.Columns[3].ReadOnly = false;
+            }
+            else if (LoaiTK == "GV")
+            {
+                DGV.Columns[4].ReadOnly = false;
+            }
+            else if (LoaiTK == "KHOA")
+            {
+                DGV.Columns[5].ReadOnly = false;
             }
             DGV.Columns[0].Width = 50;
             DGV.Columns[1].Width = 900;
@@ -111,6 +130,22 @@ namespace Login
             DGV.Rows.Add("", "* Phần trừ điểm", "", "", "", "");
             DGV.Rows.Add("5.5", "Không tổ chức thực hiện sinh hoạt tập thể theo kế hoạch của khoa, trường, Đoàn thanh niên, hội sinh viên cấp trên. (-5/ lần).", "0", SV[31], CVHT[31], KHOA[31]);
             DGV.Rows.Add("5.6", "Tập thể lớp có điểm rèn luyện dưới 60% đạt loại trung bình trở lên. (-5).", "0", SV[32], CVHT[32], KHOA[32]);
+            DGV.Rows[2].Cells[4].Value = 4;
+        }
+
+        private void BT_Reload_Click(object sender, EventArgs e)
+        {
+            if (HocKy==null)
+            {
+                MessageBox.Show("Bạn chưa chọn học kỳ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            DialogResult result = MessageBox.Show("Quá trình này sẽ mất những điểm bạn vừa nhập. Bạn có chắc chắn tải lại điểm không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                CreateDGV(MSV, HocKy);
+            }
+            else return;
         }
 
         private void comboBox_HK_SelectedIndexChanged(object sender, EventArgs e)
@@ -123,5 +158,21 @@ namespace Login
             else HocKy = "HK2-2023-2024";
             CreateDGV(MSV, HocKy);
         }
+
+        private void DGV_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                int rowIndex = e.RowIndex;
+                int columnIndex = e.ColumnIndex;
+
+                // Lấy giá trị của ô được chọn
+                var value = DGV.Rows[rowIndex].Cells[columnIndex].Value;
+
+                // Hiển thị thông tin
+                MessageBox.Show($"Hàng: {rowIndex}, Cột: {columnIndex}, Giá trị: {value}");
+            }
+        }
+        
     }
 }

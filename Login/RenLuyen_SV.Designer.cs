@@ -37,6 +37,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.BT_Save = new System.Windows.Forms.Button();
+            this.BT_Reload = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
             this.SuspendLayout();
@@ -74,10 +75,11 @@
             // DGV
             // 
             this.DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGV.Location = new System.Drawing.Point(12, 120);
+            this.DGV.Location = new System.Drawing.Point(12, 136);
             this.DGV.Name = "DGV";
             this.DGV.Size = new System.Drawing.Size(1279, 478);
             this.DGV.TabIndex = 2;
+            this.DGV.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_CellClick);
             // 
             // comboBox_HK
             // 
@@ -128,12 +130,25 @@
             this.BT_Save.TabIndex = 7;
             this.BT_Save.Text = "Lưu thay đổi";
             this.BT_Save.UseVisualStyleBackColor = false;
+            this.BT_Save.Click += new System.EventHandler(this.BT_Save_Click);
+            // 
+            // BT_Reload
+            // 
+            this.BT_Reload.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.BT_Reload.Location = new System.Drawing.Point(1177, 101);
+            this.BT_Reload.Name = "BT_Reload";
+            this.BT_Reload.Size = new System.Drawing.Size(114, 29);
+            this.BT_Reload.TabIndex = 8;
+            this.BT_Reload.Text = "Tải lại";
+            this.BT_Reload.UseVisualStyleBackColor = true;
+            this.BT_Reload.Click += new System.EventHandler(this.BT_Reload_Click);
             // 
             // RenLuyen_SV
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1303, 740);
+            this.Controls.Add(this.BT_Reload);
             this.Controls.Add(this.BT_Save);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -167,5 +182,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button BT_Save;
+        private System.Windows.Forms.Button BT_Reload;
     }
 }

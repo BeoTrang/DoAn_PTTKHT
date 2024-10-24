@@ -56,6 +56,7 @@ namespace Login
                 {
                     mainSV mainSV = new mainSV();
                     mainSV.MSV = uid;
+                    mainSV.LoaiTK = LoaiTK;
                     this.Hide();
                     mainSV.ShowDialog();
                     this.Show();
