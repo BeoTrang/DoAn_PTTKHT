@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -16,7 +17,11 @@ namespace Login
         public string HocKy {  get; set; }
         public string MSV { get; set; }
         public string LoaiTK { get; set; }
-        public int[] SV, CVHT, KHOA;
+        public int[] SV {  get; set; }
+        public int[] CVHT { get; set; }
+        public int[] KHOA { get; set; }
+        public int[] DiemNew { get; set; }
+        public int MB {  get; set; }
         public RenLuyen_SV()
         {
             InitializeComponent();
@@ -24,7 +29,28 @@ namespace Login
 
         private void BT_Save_Click(object sender, EventArgs e)
         {
-
+            DataBase_SQL dataBase_SQL = new DataBase_SQL();
+            bool KQ = false;
+            if (LoaiTK == "SV")
+            {
+                KQ = dataBase_SQL.UpdateDiemSV(DiemNew, MB);
+            }
+            else if(LoaiTK == "GV")
+            {
+                KQ = dataBase_SQL.UpdateDiemCVHT(DiemNew, MB);
+            }
+            else if (LoaiTK == "KHOA")
+            {
+                KQ = dataBase_SQL.UpdateDiemKhoa(DiemNew, MB);
+            }
+            if (KQ == true)
+            {
+                MessageBox.Show("Lưu điểm thành công");
+            }
+            else
+            {
+                MessageBox.Show("Lưu điểm không thành công");
+            }
         }
 
         private void RenLuyen_SV_Load(object sender, EventArgs e)
@@ -36,7 +62,6 @@ namespace Login
         {
             DGV.Rows.Clear();
             DGV.Columns.Clear();
-            int[] SV, CVHT, KHOA;
             DataBase_SQL dataBase_SQL = new DataBase_SQL();
             var (MB_SV, MB_CVHT, MB_KHOA) = dataBase_SQL.getMaBang(MSV, HocKy);
             if (MB_SV==0 ||MB_CVHT==0 || MB_KHOA == 0)
@@ -51,14 +76,15 @@ namespace Login
             DGV.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             DGV.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             DGV.ScrollBars = ScrollBars.Both;
-            
-
+            DGV.Rows.Clear();
+            DGV.Columns.Clear();
             DGV.Columns.Add("0", "STT");
             DGV.Columns.Add("1", "Nội dung tiêu chí đánh giá");
             DGV.Columns.Add("2", "Điểm tối đa");
             DGV.Columns.Add("3", "Điểm tự đánh giá");
             DGV.Columns.Add("4", "Điểm CVHT");
             DGV.Columns.Add("5", "Điểm khoa");
+            DiemNew = new int[SV.Length];
             for (int i = 0; i <= 5; i++)
             {
                 DGV.Columns[i].ReadOnly = true;
@@ -66,23 +92,37 @@ namespace Login
             if (LoaiTK == "SV")
             {
                 DGV.Columns[3].ReadOnly = false;
+                for (int i = 0; i < SV.Length; i++)
+                {
+                    DiemNew[i] = SV[i];
+                }
+                MB = MB_SV;
             }
             else if (LoaiTK == "GV")
             {
                 DGV.Columns[4].ReadOnly = false;
+                for (int i = 0; i < CVHT.Length; i++)
+                {
+                    DiemNew[i] = CVHT[i];
+                }
+                MB = MB_CVHT;
             }
             else if (LoaiTK == "KHOA")
             {
                 DGV.Columns[5].ReadOnly = false;
+                for (int i = 0; i < KHOA.Length; i++)
+                {
+                    DiemNew[i] = KHOA[i];
+                }
+                MB = MB_KHOA;
             }
             DGV.Columns[0].Width = 50;
             DGV.Columns[1].Width = 900;
             DGV.Columns[0].SortMode = DataGridViewColumnSortMode.NotSortable;
-            for(int i = 0; i <= 5; i++)
+            for (int i = 0; i <= 5; i++)
             {
                 DGV.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
-
             DGV.Rows.Add("1", "ĐÁNH GIÁ Ý THỨC THAM GIA HỌC TẬP: (Khung điểm đánh giá từ 0 - 20 điểm)", "20", "20", "20", "20");
             DGV.Rows.Add("", "* Phần cộng điểm", "", "", "", "");
             DGV.Rows.Add("1.1", "Điểm thưởng về học tập.", "5", SV[1], CVHT[1], KHOA[1]);
@@ -126,11 +166,26 @@ namespace Login
             DGV.Rows.Add("5.1", "Sinh viên tham gia cấp ủy chi bộ, Ban chấp hành Đoàn, Hội SV từ cấp chi đoàn, chi hội trở lên hoàn thành tốt nhiệm vụ, có uy tín và hiệu quả trong công việc được phân công.", "5", SV[27], CVHT[27], KHOA[27]);
             DGV.Rows.Add("5.2", "Sinh viên tham gia cấp ủy chi bộ, Ban chấp hành Đoàn, Hội SV từ cấp chi đoàn, chi hội trở lên; khi tập thể tham gia, phụ trách được cấp trên khen thưởng.", "3", SV[28], CVHT[28], KHOA[28]);
             DGV.Rows.Add("5.3", "Tập thể phụ trách có điểm rèn luyện đạt 85% xếp loại từ khá trở lên.", "2", SV[29], CVHT[29], KHOA[29]);
-            DGV.Rows.Add("5.4", "* Phần cộng điểm", "10", SV[30], CVHT[30], KHOA[30]);
+            DGV.Rows.Add("5.4", "Sinh viên đạt được các thành tích đặc biệt trong học tập, rèn luyện: đạt các danh hiệu: SV giỏi, SV xuất sắc, SV 5 tốt từ cấp tỉnh trở lên, Sao tháng riêng, Đảng viên xếp loại đủ tư cách hoành thành XS nhiệm vụ, SV có thành tích đặc biệt xuất sắc trong hoạt động Văn nghệ, thể thao.", "10", SV[30], CVHT[30], KHOA[30]);
             DGV.Rows.Add("", "* Phần trừ điểm", "", "", "", "");
             DGV.Rows.Add("5.5", "Không tổ chức thực hiện sinh hoạt tập thể theo kế hoạch của khoa, trường, Đoàn thanh niên, hội sinh viên cấp trên. (-5/ lần).", "0", SV[31], CVHT[31], KHOA[31]);
             DGV.Rows.Add("5.6", "Tập thể lớp có điểm rèn luyện dưới 60% đạt loại trung bình trở lên. (-5).", "0", SV[32], CVHT[32], KHOA[32]);
-            DGV.Rows[2].Cells[4].Value = 4;
+
+            //DGV.Rows[1].ReadOnly = true;
+            //DGV.Rows[2].ReadOnly = true;
+            //DGV.Rows[6].ReadOnly = true;
+            //DGV.Rows[9].ReadOnly = true;
+            //DGV.Rows[10].ReadOnly = true;
+            //DGV.Rows[13].ReadOnly = true;
+            //DGV.Rows[21].ReadOnly = true;
+            //DGV.Rows[22].ReadOnly = true;
+            //DGV.Rows[26].ReadOnly = true;
+            //DGV.Rows[30].ReadOnly = true;
+            //DGV.Rows[31].ReadOnly = true;
+            //DGV.Rows[36].ReadOnly = true;
+            //DGV.Rows[39].ReadOnly = true;
+            //DGV.Rows[40].ReadOnly = true;
+            //DGV.Rows[45].ReadOnly = true;
         }
 
         private void BT_Reload_Click(object sender, EventArgs e)
@@ -148,6 +203,19 @@ namespace Login
             else return;
         }
 
+        private void DGV_CellClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                // Lấy thông tin dòng và cột
+                int rowIndex = e.RowIndex;  // Dòng hiện tại (tính từ 1)
+                int columnIndex = e.ColumnIndex;  // Cột hiện tại (tính từ 1)
+
+                // Hiển thị thông báo
+                MessageBox.Show($"Bạn đã nhấn vào cột {columnIndex}, dòng {rowIndex}.");
+            }
+        }
+
         private void comboBox_HK_SelectedIndexChanged(object sender, EventArgs e)
         {
             HocKy = comboBox_HK.SelectedItem.ToString();
@@ -158,21 +226,506 @@ namespace Login
             else HocKy = "HK2-2023-2024";
             CreateDGV(MSV, HocKy);
         }
-
-        private void DGV_CellClick(object sender, DataGridViewCellEventArgs e)
+        public void DGV_Load()
         {
-            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            int[] row = {0,3,4,5,7,11,12,14,15,16,17,18,19,20,23,24,25,26,27,28,29,32,33,34,35,37,38,41,42,43,44,46,47};
+            if (LoaiTK=="SV")
             {
-                int rowIndex = e.RowIndex;
-                int columnIndex = e.ColumnIndex;
+                for (int i = 1; i <= 32; i++)
+                {
+                    DGV.Rows[(row[i] - 1)].Cells[3].Value = DiemNew[i].ToString();
+                }
+            }
+            else if (LoaiTK=="GV")
+            {
+                for (int i = 1; i <= 32; i++)
+                {
+                    DGV.Rows[(row[i] - 1)].Cells[4].Value = DiemNew[i].ToString();
+                }
+            }
+            else
+            {
+                for (int i = 1; i <= 32; i++)
+                {
+                    DGV.Rows[(row[i] - 1)].Cells[4].Value = DiemNew[i].ToString();
+                }
+            }
 
-                // Lấy giá trị của ô được chọn
-                var value = DGV.Rows[rowIndex].Cells[columnIndex].Value;
+        }
 
-                // Hiển thị thông tin
-                MessageBox.Show($"Hàng: {rowIndex}, Cột: {columnIndex}, Giá trị: {value}");
+        private void DGV_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            DGV.EndEdit();
+            int KT;
+            int row = e.RowIndex;
+            int column = e.ColumnIndex;
+            var TEST = DGV.Rows[row].Cells[column].Value.ToString().Trim();
+            if (!int.TryParse(TEST, out int result))
+            {
+                MessageBox.Show("Giá trị không hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DGV_Load();
+                return;
+            }
+            else
+            {
+                KT = int.Parse(TEST);
+                switch (row)
+                {
+                    case 2:
+                        {
+                            if (!(KT >= 0 && KT <= 5))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[1] = KT;
+                            }
+                            break;
+                        }
+                    case 3:
+                        {
+                            if (!(KT>=0 && KT<=7))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[2] = KT;
+                            }
+                            break;
+                        }
+                    case 4:
+                        {
+                            if (!(KT >= 0 && KT <= 11))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[3] = KT;
+                            }
+                            break;
+                        }
+                    case 6:
+                        {
+                            if (!(KT <= 0 && KT >= -10))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[4] = KT;
+                            }
+                            break;
+                        }
+                    case 7:
+                        {
+                            if (!(KT <= 0 && KT >= -15))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[5] = KT;
+                            }
+                            break;
+                        }
+                    case 10:
+                        {
+                            if (!(KT >= 0 && KT <= 5))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[6] = KT;
+                            }
+                            break;
+                        }
+                    case 11:
+                        {
+                            if (!(KT >= 0 && KT <= 20))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[7] = KT;
+                            }
+                            break;
+                        }
+                    case 13:
+                        {
+                            if (!(KT <= 0))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[8] = KT;
+                            }
+                            break;
+                        }
+                    case 14:
+                        {
+                            if (!(KT <= 0))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[9] = KT;
+                            }
+                            break;
+                        }
+                    case 15:
+                        {
+                            if (!(KT <= 0))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[10] = KT;
+                            }
+                            break;
+                        }
+                    case 16:
+                        {
+                            if (!(KT <= 0))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[11] = KT;
+                            }
+                            break;
+                        }
+                    case 17:
+                        {
+                            if (!(KT <= 0))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[12] = KT;
+                            }
+                            break;
+                        }
+                    case 18:
+                        {
+                            if (!(KT <= 0))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[13] = KT;
+                            }
+                            break;
+                        }
+                    case 19:
+                        {
+                            if (!(KT <= 0))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[14] = KT;
+                            }
+                            break;
+                        }
+                    case 22:
+                        {
+                            if (!(KT >=0&& KT<=5))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[15] = KT;
+                            }
+                            break;
+                        }
+                    case 23:
+                        {
+                            if (!(KT >= 0 && KT <= 10))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[16] = KT;
+                            }
+                            break;
+                        }
+                    case 24:
+                        {
+                            if (!(KT >= 0 && KT <= 5))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[17] = KT;
+                            }
+                            break;
+                        }
+                    case 26:
+                        {
+                            if (!(KT<=0))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[18] = KT;
+                            }
+                            break;
+                        }
+                    case 27:
+                        {
+                            if (!(KT <= 0))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[19] = KT;
+                            }
+                            break;
+                        }
+                    case 28:
+                        {
+                            if (!(KT <= 0))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[20] = KT;
+                            }
+                            break;
+                        }
+                    case 31:
+                        {
+                            if (!(KT >= 0 && KT<=5))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[21] = KT;
+                            }
+                            break;
+                        }
+                    case 32:
+                        {
+                            if (!(KT >= 0 && KT <= 10))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[22] = KT;
+                            }
+                            break;
+                        }
+                    case 33:
+                        {
+                            if (!(KT >= 0 && KT <= 10))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[23] = KT;
+                            }
+                            break;
+                        }
+                    case 34:
+                        {
+                            if (!(KT >= 0 && KT <= 5))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[24] = KT;
+                            }
+                            break;
+                        }
+                    case 36:
+                        {
+                            if (!(KT <= 0))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[25] = KT;
+                            }
+                            break;
+                        }
+                    case 37:
+                        {
+                            if (!(KT <= 0))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[26] = KT;
+                            }
+                            break;
+                        }
+                    case 40:
+                        {
+                            if (!(KT >= 0 && KT<=5))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[27] = KT;
+                            }
+                            break;
+                        }
+                    case 41:
+                        {
+                            if (!(KT >= 0 && KT <= 3))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[28] = KT;
+                            }
+                            break;
+                        }
+                    case 42:
+                        {
+                            if (!(KT >= 0 && KT <= 2))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[29] = KT;
+                            }
+                            break;
+                        }
+                    case 43:
+                        {
+                            if (!(KT >= 0 && KT <= 10))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[30] = KT;
+                            }
+                            break;
+                        }
+                    case 45:
+                        {
+                            if (!(KT <= 0))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[31] = KT;
+                            }
+                            break;
+                        }
+                    case 46:
+                        {
+                            if (!(KT <= 0))
+                            {
+                                MessageBox.Show("Giá trị vừa nhập không đúng trong khung điểm chấm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                DGV_Load();
+                                return;
+                            }
+                            else
+                            {
+                                DiemNew[32] = KT;
+                            }
+                            break;
+                        }
+                    default:
+                        {
+                            MessageBox.Show("Có gì đó sai sai!");
+                            break;
+                        }
+                }
             }
         }
-        
     }
 }

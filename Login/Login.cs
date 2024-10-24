@@ -25,6 +25,7 @@ namespace Login
 
         private void BT_Login_Click(object sender, EventArgs e)
         {
+            
             if (TB_pwd.Text == "" || TB_uid.Text == "")
             {
                 MessageBox.Show("Điền đầy đủ thông tin.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -91,6 +92,7 @@ namespace Login
         private void Login_Load(object sender, EventArgs e)
         {
             TB_pwd.PasswordChar = '*';
+            TB_uid.Text = "K215480106129";
         }
     }
 }
