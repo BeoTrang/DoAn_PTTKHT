@@ -64,7 +64,12 @@ namespace Login
                 }
                 else if (LoaiTK == "GV")
                 {
-                    MessageBox.Show("Main GV!");
+                    mainGV mainGV = new mainGV();  
+                    mainGV.MGV = uid;
+                    mainGV.LoaiTK = LoaiTK;
+                    this.Hide();
+                    mainGV.ShowDialog();
+                    this.Show();
                 }
                 else if (LoaiTK == "KHOA")
                 {

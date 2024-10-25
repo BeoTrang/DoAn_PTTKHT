@@ -408,7 +408,7 @@
             this.panel4.Controls.Add(this.LB_TenLop);
             this.panel4.Controls.Add(this.label9);
             this.panel4.Controls.Add(this.LB_MaLop);
-            this.panel4.Location = new System.Drawing.Point(762, 12);
+            this.panel4.Location = new System.Drawing.Point(736, 12);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(265, 178);
             this.panel4.TabIndex = 16;
@@ -602,7 +602,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1124, 647);
+            this.ClientSize = new System.Drawing.Size(1038, 647);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.panel5);

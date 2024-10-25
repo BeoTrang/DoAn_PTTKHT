@@ -37,6 +37,50 @@ namespace dll_connectSQL
                 return null;
             }
         }
+        public (string, string, string, string, string) GetGV(string MGV_input)
+        {
+            string MaLop = "";
+            string TenLop = "";
+            string MaKhoa = "";
+            string TenKhoa = "";
+            string HVT_GV = "";
+            using (SqlConnection connection = new SqlConnection(cnstr))
+            {
+                connection.Open();
+                string query = "SELECT HoTen, MaLop FROM ThongTin_GV WHERE MGV = @MGV";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@MGV", MGV_input);
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    HVT_GV = reader["HoTen"].ToString();
+                    MaLop = reader["MaLop"].ToString();
+                }
+            }
+            using (SqlConnection connection = new SqlConnection(cnstr))
+            {
+                connection.Open();
+                string query = @"
+                SELECT Lop.TenLop, Lop.MaKhoa, Khoa.TenKhoa
+                FROM Lop
+                INNER JOIN Khoa ON Lop.MaKhoa = Khoa.MaKhoa
+                WHERE Lop.MaLop = @MaLop";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@MaLop", MaLop);
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    TenLop = reader["TenLop"].ToString();
+                    MaKhoa = reader["MaKhoa"].ToString();
+                    TenKhoa = reader["TenKhoa"].ToString();
+                }
+            }
+            return (HVT_GV, MaLop, TenLop, MaKhoa, TenKhoa );
+        }
         public (string, string, string, string, string, string, string) GetSV(string MSV_input)
         {
             string HVT_SV = "";
@@ -452,6 +496,9 @@ namespace dll_connectSQL
                 }
             }
         }
+        public void DS_sinhvien()
+        {
 
+        }
     }
 }

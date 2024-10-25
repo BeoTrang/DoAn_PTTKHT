@@ -55,6 +55,12 @@
     <Compile Include="ChangPWD.Designer.cs">
       <DependentUpon>ChangPWD.cs</DependentUpon>
     </Compile>
+    <Compile Include="DS_Sinhvien.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DS_Sinhvien.Designer.cs">
+      <DependentUpon>DS_Sinhvien.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form_Captcha.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,6 +72,12 @@
     </Compile>
     <Compile Include="Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="mainGV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mainGV.Designer.cs">
+      <DependentUpon>mainGV.cs</DependentUpon>
     </Compile>
     <Compile Include="mainSV.cs">
       <SubType>Form</SubType>
@@ -84,11 +96,17 @@
     <EmbeddedResource Include="ChangPWD.resx">
       <DependentUpon>ChangPWD.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DS_Sinhvien.resx">
+      <DependentUpon>DS_Sinhvien.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form_Captcha.resx">
       <DependentUpon>Form_Captcha.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mainGV.resx">
+      <DependentUpon>mainGV.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="mainSV.resx">
       <DependentUpon>mainSV.cs</DependentUpon>

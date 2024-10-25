@@ -14,13 +14,6 @@ namespace Login
     public partial class mainSV : Form
     {
         public string MSV { get; set; }
-        public string HVT_SV { get; set; }
-        public string MaLop { get; set; }
-        public string TenLop { get; set; }
-        public string MaKhoa { get; set; }
-        public string TenKhoa { get; set; }
-        public string MGV { get; set; }
-        public string HVT_GV { get; set; }
         public string LoaiTK { get; set; }
 
         public mainSV()

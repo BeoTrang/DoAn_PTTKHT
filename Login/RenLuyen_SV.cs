@@ -171,21 +171,21 @@ namespace Login
             DGV.Rows.Add("5.5", "Không tổ chức thực hiện sinh hoạt tập thể theo kế hoạch của khoa, trường, Đoàn thanh niên, hội sinh viên cấp trên. (-5/ lần).", "0", SV[31], CVHT[31], KHOA[31]);
             DGV.Rows.Add("5.6", "Tập thể lớp có điểm rèn luyện dưới 60% đạt loại trung bình trở lên. (-5).", "0", SV[32], CVHT[32], KHOA[32]);
 
-            //DGV.Rows[1].ReadOnly = true;
-            //DGV.Rows[2].ReadOnly = true;
-            //DGV.Rows[6].ReadOnly = true;
-            //DGV.Rows[9].ReadOnly = true;
-            //DGV.Rows[10].ReadOnly = true;
-            //DGV.Rows[13].ReadOnly = true;
-            //DGV.Rows[21].ReadOnly = true;
-            //DGV.Rows[22].ReadOnly = true;
-            //DGV.Rows[26].ReadOnly = true;
-            //DGV.Rows[30].ReadOnly = true;
-            //DGV.Rows[31].ReadOnly = true;
-            //DGV.Rows[36].ReadOnly = true;
-            //DGV.Rows[39].ReadOnly = true;
-            //DGV.Rows[40].ReadOnly = true;
-            //DGV.Rows[45].ReadOnly = true;
+            DGV.Rows[0].ReadOnly = true;
+            DGV.Rows[1].ReadOnly = true;
+            DGV.Rows[5].ReadOnly = true;
+            DGV.Rows[8].ReadOnly = true;
+            DGV.Rows[9].ReadOnly = true;
+            DGV.Rows[12].ReadOnly = true;
+            DGV.Rows[20].ReadOnly = true;
+            DGV.Rows[21].ReadOnly = true;
+            DGV.Rows[27].ReadOnly = true;
+            DGV.Rows[29].ReadOnly = true;
+            DGV.Rows[30].ReadOnly = true;
+            DGV.Rows[35].ReadOnly = true;
+            DGV.Rows[38].ReadOnly = true;
+            DGV.Rows[39].ReadOnly = true;
+            DGV.Rows[44].ReadOnly = true;
         }
 
         private void BT_Reload_Click(object sender, EventArgs e)
@@ -201,19 +201,6 @@ namespace Login
                 CreateDGV(MSV, HocKy);
             }
             else return;
-        }
-
-        private void DGV_CellClick_1(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
-            {
-                // Lấy thông tin dòng và cột
-                int rowIndex = e.RowIndex;  // Dòng hiện tại (tính từ 1)
-                int columnIndex = e.ColumnIndex;  // Cột hiện tại (tính từ 1)
-
-                // Hiển thị thông báo
-                MessageBox.Show($"Bạn đã nhấn vào cột {columnIndex}, dòng {rowIndex}.");
-            }
         }
 
         private void comboBox_HK_SelectedIndexChanged(object sender, EventArgs e)
@@ -250,7 +237,6 @@ namespace Login
                     DGV.Rows[(row[i] - 1)].Cells[4].Value = DiemNew[i].ToString();
                 }
             }
-
         }
 
         private void DGV_CellEndEdit(object sender, DataGridViewCellEventArgs e)
