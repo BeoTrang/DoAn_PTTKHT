@@ -49,7 +49,7 @@
             this.DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV.Location = new System.Drawing.Point(12, 65);
             this.DGV.Name = "DGV";
-            this.DGV.Size = new System.Drawing.Size(512, 504);
+            this.DGV.Size = new System.Drawing.Size(512, 472);
             this.DGV.TabIndex = 1;
             // 
             // DS_Sinhvien

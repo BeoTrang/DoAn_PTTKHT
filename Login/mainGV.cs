@@ -15,6 +15,7 @@ namespace Login
     {
         public string MGV { get; set; } 
         public string LoaiTK { get; set; }
+        public string MaLop { get; set; }
         public mainGV()
         {
             InitializeComponent();
@@ -24,8 +25,9 @@ namespace Login
         {
             LB_uid.Text = MGV;
             DataBase_SQL dataBase_SQL = new DataBase_SQL();
-            var (HVT_GV, MaLop, TenLop, MaKhoa, TenKhoa ) = dataBase_SQL.GetGV(MGV);
+            var (HVT_GV, MaLop_1, TenLop, MaKhoa, TenKhoa ) = dataBase_SQL.GetGV(MGV);
             LB_MGV.Text = MGV;
+            MaLop = MaLop_1;
             LB_HVT.Text = HVT_GV;
             LB_HVT_GV.Text = HVT_GV;
             LB_MaLop.Text = MaLop;
@@ -55,6 +57,13 @@ namespace Login
         private void BT_Logout_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void ChucNang_RL_Click(object sender, EventArgs e)
+        {
+            DS_Sinhvien dS_Sinhvien = new DS_Sinhvien();
+            dS_Sinhvien.MaLop = MaLop;
+            dS_Sinhvien.ShowDialog();   
         }
     }
 }

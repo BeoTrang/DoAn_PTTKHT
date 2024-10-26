@@ -496,9 +496,24 @@ namespace dll_connectSQL
                 }
             }
         }
-        public void DS_sinhvien()
+        public DataTable DS_sinhvien(string MaLop)
         {
-
+            string query = "SELECT * FORM Thongtin_SV where MaLop = @MaLop";
+            DataTable dataTable = new DataTable();
+            
+            using(SqlConnection conn = new SqlConnection(cnstr))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@MaLop", MaLop);
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(dataTable);
+                    }
+                }
+            }
+            return dataTable;
         }
     }
 }

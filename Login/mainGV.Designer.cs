@@ -365,6 +365,7 @@
             this.ChucNang_RL.Size = new System.Drawing.Size(293, 31);
             this.ChucNang_RL.TabIndex = 3;
             this.ChucNang_RL.Text = "> Đánh giá kết quả rèn luyện sinh viên";
+            this.ChucNang_RL.Click += new System.EventHandler(this.ChucNang_RL_Click);
             this.ChucNang_RL.MouseEnter += new System.EventHandler(this.ChucNang_RL_MouseEnter);
             this.ChucNang_RL.MouseLeave += new System.EventHandler(this.ChucNang_RL_MouseLeave);
             // 
