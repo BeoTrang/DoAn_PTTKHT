@@ -254,6 +254,29 @@ namespace dll_connectSQL
             }
             return KHOA;
         }
+
+        public (List<string>, List<string>) getHK()
+        {
+            var MaHK = new List<string>();
+            var TenHK = new List<string>();
+            string query = "SELECT [MaHK],[TenHK] FROM Hocky";
+            using (SqlConnection conn = new SqlConnection(cnstr))
+            {
+                conn.Open();
+                using (SqlCommand command = new SqlCommand(query, conn))
+                {
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        MaHK.Add(reader["MaHK"].ToString());
+                        TenHK.Add(reader["TenHK"].ToString());
+                    }
+                    reader.Close();
+                }
+            }
+            return (MaHK, TenHK);
+        }
+
         public (string, string, string) getMaBang(string MSV, string MaHK)
         {
             string MB_SV=null, MB_CVHT=null, MB_Khoa=null;

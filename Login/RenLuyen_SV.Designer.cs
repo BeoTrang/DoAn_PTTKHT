@@ -38,6 +38,12 @@
             this.label5 = new System.Windows.Forms.Label();
             this.BT_Save = new System.Windows.Forms.Button();
             this.BT_Reload = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.LB_SUM_SV = new System.Windows.Forms.Label();
+            this.LB_SUM_KHOA = new System.Windows.Forms.Label();
+            this.LB_SUM_CVHT = new System.Windows.Forms.Label();
+            this.LB_Tong = new System.Windows.Forms.Label();
+            this.LB_XepLoai = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
             this.SuspendLayout();
@@ -143,11 +149,79 @@
             this.BT_Reload.UseVisualStyleBackColor = true;
             this.BT_Reload.Click += new System.EventHandler(this.BT_Reload_Click);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(956, 617);
+            this.label6.Name = "label6";
+            this.label6.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            this.label6.Size = new System.Drawing.Size(95, 31);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "Tổng điểm:";
+            // 
+            // LB_SUM_SV
+            // 
+            this.LB_SUM_SV.AutoSize = true;
+            this.LB_SUM_SV.Location = new System.Drawing.Point(1066, 617);
+            this.LB_SUM_SV.Name = "LB_SUM_SV";
+            this.LB_SUM_SV.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            this.LB_SUM_SV.Size = new System.Drawing.Size(34, 31);
+            this.LB_SUM_SV.TabIndex = 10;
+            this.LB_SUM_SV.Text = "SV";
+            // 
+            // LB_SUM_KHOA
+            // 
+            this.LB_SUM_KHOA.AutoSize = true;
+            this.LB_SUM_KHOA.Location = new System.Drawing.Point(1209, 617);
+            this.LB_SUM_KHOA.Name = "LB_SUM_KHOA";
+            this.LB_SUM_KHOA.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            this.LB_SUM_KHOA.Size = new System.Drawing.Size(63, 31);
+            this.LB_SUM_KHOA.TabIndex = 11;
+            this.LB_SUM_KHOA.Text = "KHOA";
+            // 
+            // LB_SUM_CVHT
+            // 
+            this.LB_SUM_CVHT.AutoSize = true;
+            this.LB_SUM_CVHT.Location = new System.Drawing.Point(1133, 617);
+            this.LB_SUM_CVHT.Name = "LB_SUM_CVHT";
+            this.LB_SUM_CVHT.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            this.LB_SUM_CVHT.Size = new System.Drawing.Size(61, 31);
+            this.LB_SUM_CVHT.TabIndex = 12;
+            this.LB_SUM_CVHT.Text = "CVHT";
+            // 
+            // LB_Tong
+            // 
+            this.LB_Tong.AutoSize = true;
+            this.LB_Tong.ForeColor = System.Drawing.Color.Red;
+            this.LB_Tong.Location = new System.Drawing.Point(252, 643);
+            this.LB_Tong.Name = "LB_Tong";
+            this.LB_Tong.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            this.LB_Tong.Size = new System.Drawing.Size(117, 31);
+            this.LB_Tong.TabIndex = 13;
+            this.LB_Tong.Text = "Điểm công bố";
+            // 
+            // LB_XepLoai
+            // 
+            this.LB_XepLoai.AutoSize = true;
+            this.LB_XepLoai.ForeColor = System.Drawing.Color.Red;
+            this.LB_XepLoai.Location = new System.Drawing.Point(277, 674);
+            this.LB_XepLoai.Name = "LB_XepLoai";
+            this.LB_XepLoai.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            this.LB_XepLoai.Size = new System.Drawing.Size(72, 31);
+            this.LB_XepLoai.TabIndex = 14;
+            this.LB_XepLoai.Text = "Xếp loại";
+            // 
             // RenLuyen_SV
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1303, 740);
+            this.Controls.Add(this.LB_XepLoai);
+            this.Controls.Add(this.LB_Tong);
+            this.Controls.Add(this.LB_SUM_CVHT);
+            this.Controls.Add(this.LB_SUM_KHOA);
+            this.Controls.Add(this.LB_SUM_SV);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.BT_Reload);
             this.Controls.Add(this.BT_Save);
             this.Controls.Add(this.label5);
@@ -183,5 +257,11 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button BT_Save;
         private System.Windows.Forms.Button BT_Reload;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label LB_SUM_SV;
+        private System.Windows.Forms.Label LB_SUM_KHOA;
+        private System.Windows.Forms.Label LB_SUM_CVHT;
+        private System.Windows.Forms.Label LB_Tong;
+        private System.Windows.Forms.Label LB_XepLoai;
     }
 }

@@ -22,6 +22,8 @@ namespace Login
         public int[] KHOA { get; set; }
         public int[] DiemNew { get; set; }
         public string MB {  get; set; }
+        public List<string> MaHK {  get; set; }
+        public List<string> TenHK {  get; set; }
         public RenLuyen_SV()
         {
             InitializeComponent();
@@ -55,18 +57,129 @@ namespace Login
 
         private void RenLuyen_SV_Load(object sender, EventArgs e)
         {
-            comboBox_HK.Items.Add("Học kỳ 3 Năm học 2023-2024");
-            comboBox_HK.Items.Add("Học kỳ 2 Năm học 2023-2024");
+            LB_SUM_SV.Hide();
+            LB_SUM_CVHT.Hide();
+            LB_SUM_KHOA.Hide();
+            LB_XepLoai.Hide();
+            LB_Tong.Hide();
+            DataBase_SQL dataBase_SQL = new DataBase_SQL();
+            var (MaHK, TenHK) = dataBase_SQL.getHK();
+            this.MaHK = MaHK;
+            this.TenHK = TenHK;
+            for (int i = 0; i < this.TenHK.Count; i++)
+            {
+                comboBox_HK.Items.Add(this.TenHK[i].ToString());
+            }
         }
-        public void CreateDGV(string MSV, string HocKY)
+        public void TongDiem_Load()
+        {
+            int SumSV = 0, SumCVHT = 0, SumKHOA = 0, Tong = 0;
+            int[] DiemCong = {1, 2, 3, 6, 7, 15, 16, 17, 21, 22, 23, 24, 27, 28, 29};
+            int[] DiemTru = {4, 5, 8, 9, 10, 11, 12, 13, 14, 18, 19, 20, 25, 26, 31, 32};
+            switch (LoaiTK)
+            {
+                case "SV":
+                    {
+                        for (int i = 0;i < DiemCong.Length; i++)
+                        {
+                            SumSV += DiemNew[DiemCong[i]];
+                            SumCVHT += CVHT[DiemCong[i]];
+                            SumKHOA += KHOA[DiemCong[i]];
+                        }
+                        for(int i = 0; i < DiemTru.Length; i++)
+                        {
+                            SumSV -= DiemNew[DiemTru[i]];
+                            SumCVHT -= CVHT[DiemTru[i]];
+                            SumKHOA -= KHOA[DiemTru[i]];
+                        }
+                        break;
+                    }
+                case "CVHT":
+                    {
+                        for (int i = 0; i < DiemCong.Length; i++)
+                        {
+                            SumSV += SV[DiemCong[i]];
+                            SumCVHT += DiemNew[DiemCong[i]];
+                            SumKHOA += KHOA[DiemCong[i]];
+                        }
+                        for (int i = 0; i < DiemTru.Length; i++)
+                        {
+                            SumSV -= SV[DiemTru[i]];
+                            SumCVHT -= DiemNew[DiemTru[i]];
+                            SumKHOA -= KHOA[DiemTru[i]];
+                        }
+                        break;
+                    }
+                case "KHOA":
+                    {
+                        for (int i = 0; i < DiemCong.Length; i++)
+                        {
+                            SumSV += SV[DiemCong[i]];
+                            SumCVHT += CVHT[DiemCong[i]];
+                            SumKHOA += DiemNew[DiemCong[i]];
+                        }
+                        for (int i = 0; i < DiemTru.Length; i++)
+                        {
+                            SumSV -= SV[DiemTru[i]];
+                            SumCVHT -= CVHT[DiemTru[i]];
+                            SumKHOA -= DiemNew[DiemTru[i]];
+                        }
+                        break;
+                    }
+                default:
+                    {
+                        MessageBox.Show("Lỗi ở tính tổng điểm");
+                        break;
+                    }
+            }
+            for (int i = 0; i < DiemCong.Length; i++)
+            {
+                Tong += KHOA[DiemCong[i]];
+            }
+            for (int i = 0; i < DiemTru.Length; i++)
+            {
+                Tong -= KHOA[DiemTru[i]];
+            }
+            LB_SUM_SV.Text = SumSV.ToString();
+            LB_SUM_CVHT.Text = SumCVHT.ToString();
+            LB_SUM_KHOA.Text = SumKHOA.ToString();
+            LB_Tong.Text = Tong.ToString();
+            LB_SUM_CVHT.Show();
+            LB_SUM_KHOA.Show();
+            LB_SUM_SV.Show();
+            LB_Tong.Show();
+            LB_XepLoai.Show();
+            if (Tong >= 80)
+            {
+                LB_XepLoai.Text = "Tốt";
+            }
+            else if ((Tong < 80) && (Tong >= 65))
+            {
+                LB_XepLoai.Text = "Khá";
+            }
+            else if ((Tong < 65) && (Tong >= 50))
+            {
+                LB_XepLoai.Text = "Trung bình";
+            }
+            else
+            {
+                LB_XepLoai.Text = "Yếu";
+            }
+        }
+        public void CreateDGV(string MSV, string MaHK_Input)
         {
             DGV.Rows.Clear();
             DGV.Columns.Clear();
             DataBase_SQL dataBase_SQL = new DataBase_SQL();
-            var (MB_SV, MB_CVHT, MB_KHOA) = dataBase_SQL.getMaBang(MSV, HocKy);
+            var (MB_SV, MB_CVHT, MB_KHOA) = dataBase_SQL.getMaBang(MSV, MaHK_Input);
             if (MB_SV==null ||MB_CVHT==null || MB_KHOA == null)
             {
-                MessageBox.Show("Lỗi rồi nhưng không biết ở đâu");
+                LB_SUM_SV.Hide();
+                LB_SUM_CVHT.Hide();
+                LB_SUM_KHOA.Hide();
+                LB_XepLoai.Hide();
+                LB_Tong.Hide();
+                MessageBox.Show("Không có dữ liệu"); 
                 return;
             }
             SV = dataBase_SQL.getDiemSV(MB_SV);
@@ -186,6 +299,7 @@ namespace Login
             DGV.Rows[38].ReadOnly = true;
             DGV.Rows[39].ReadOnly = true;
             DGV.Rows[44].ReadOnly = true;
+            TongDiem_Load();
         }
 
         private void BT_Reload_Click(object sender, EventArgs e)
@@ -205,13 +319,17 @@ namespace Login
 
         private void comboBox_HK_SelectedIndexChanged(object sender, EventArgs e)
         {
-            HocKy = comboBox_HK.SelectedItem.ToString();
-            if (HocKy == "Học kỳ 3 Năm học 2023-2024")
+            string HK = comboBox_HK.SelectedItem.ToString();
+            for (int i = 0;i < TenHK.Count; i++)
             {
-                HocKy = "HK3-2023-2024";
+                if (HK == TenHK[i].ToString())
+                {
+                    HocKy = MaHK[i].ToString();
+                    CreateDGV(MSV, MaHK[i].ToString());
+                    return;
+                }
             }
-            else HocKy = "HK2-2023-2024";
-            CreateDGV(MSV, HocKy);
+            MessageBox.Show("Lỗi ở đâu rồi!");
         }
         public void DGV_Load()
         {
@@ -237,6 +355,7 @@ namespace Login
                     DGV.Rows[(row[i] - 1)].Cells[4].Value = DiemNew[i].ToString();
                 }
             }
+            TongDiem_Load();
         }
 
         private void DGV_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -712,6 +831,7 @@ namespace Login
                         }
                 }
             }
+            TongDiem_Load();
         }
     }
 }
