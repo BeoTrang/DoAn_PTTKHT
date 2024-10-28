@@ -26,7 +26,7 @@ namespace Login
         private void DS_Sinhvien_Load(object sender, EventArgs e)
         {
             LB_TenLop.Text = TenLop;
-            Row = 0;
+            Row = -1;
             CreateDGV();
         }
         public void CreateDGV()
@@ -46,8 +46,13 @@ namespace Login
 
         private void BT_Choose_Click(object sender, EventArgs e)
         {
-            RenLuyen_SV renLuyen_SV = new RenLuyen_SV();   
-            renLuyen_SV.LoaiTK=this.LoaiTK;
+            if (Row < 0)
+            {
+                MessageBox.Show("Bạn chưa chọn sinh viên!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            RenLuyen_SV renLuyen_SV = new RenLuyen_SV();
+            renLuyen_SV.LoaiTK = this.LoaiTK;
             renLuyen_SV.MSV = this.MaSV;
             renLuyen_SV.ShowDialog();
         }

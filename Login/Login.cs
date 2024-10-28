@@ -73,7 +73,12 @@ namespace Login
                 }
                 else if (LoaiTK == "KHOA")
                 {
-                    MessageBox.Show("Main KHOA!");
+                    mainKHOA mainKHOA = new mainKHOA();
+                    mainKHOA.MGV = uid;
+                    mainKHOA.LoaiTK = LoaiTK;
+                    this.Hide();
+                    mainKHOA.ShowDialog();
+                    this.Show();
                 }
             }
             else

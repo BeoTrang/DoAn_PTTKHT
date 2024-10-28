@@ -81,6 +81,42 @@ namespace dll_connectSQL
             }
             return (HVT_GV, MaLop, TenLop, MaKhoa, TenKhoa );
         }
+
+        public (string, string, string) getKHOA(string MGV)
+        {
+            string MaKhoa = null;
+            string TenKhoa = null;
+            string HoTen = null;
+            string query1 = "SELECT [HoTen], [MaKhoa] FROM ThongTin_GV WHERE MGV = @MGV";
+            string query2 = "SELECT [TenKhoa] FROM KHOA WHERE MaKhoa = @MaKhoa";
+            using (SqlConnection connection = new SqlConnection(cnstr))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(query1, connection);
+                command.Parameters.AddWithValue("@MGV", MGV);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    HoTen = reader["HoTen"].ToString();
+                    MaKhoa = reader["MaKhoa"].ToString();
+                }
+                reader.Close();
+            }
+            using (SqlConnection connection = new SqlConnection(cnstr))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(query2, connection);
+                command.Parameters.AddWithValue("@MaKhoa", MaKhoa);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    TenKhoa = reader["TenKhoa"].ToString();
+                }
+                reader.Close();
+            }
+            return (HoTen, MaKhoa, TenKhoa);
+        }
+
         public (string, string, string, string, string, string, string) GetSV(string MSV_input)
         {
             string HVT_SV = "";
@@ -320,7 +356,6 @@ namespace dll_connectSQL
                 {
                     checkCmd.Parameters.AddWithValue("@MB_SV", MB);
                     int count = (int)checkCmd.ExecuteScalar();
-
                     if (count > 0)
                     {
                         using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
@@ -530,6 +565,25 @@ namespace dll_connectSQL
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@MaLop", MaLop);
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(dataTable);
+                    }
+                }
+            }
+            return dataTable;
+        }
+        public DataTable DS_Lop(string MaKhoa)
+        {
+            string query = "SELECT [MaLop], [TenLop] FROM Lop where MaKhoa = @MaKhoa";
+            DataTable dataTable = new DataTable();
+
+            using (SqlConnection conn = new SqlConnection(cnstr))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@MaKhoa", MaKhoa);
                     using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
                     {
                         adapter.Fill(dataTable);
