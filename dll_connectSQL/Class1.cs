@@ -521,7 +521,7 @@ namespace dll_connectSQL
         }
         public DataTable DS_sinhvien(string MaLop)
         {
-            string query = "SELECT * FORM Thongtin_SV where MaLop = @MaLop";
+            string query = "SELECT [MSV], [HoTen] FROM Thongtin_SV where MaLop = @MaLop";
             DataTable dataTable = new DataTable();
             
             using(SqlConnection conn = new SqlConnection(cnstr))

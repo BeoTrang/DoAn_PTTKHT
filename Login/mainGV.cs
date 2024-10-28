@@ -16,6 +16,7 @@ namespace Login
         public string MGV { get; set; } 
         public string LoaiTK { get; set; }
         public string MaLop { get; set; }
+        public string TenLop { get; set; }
         public mainGV()
         {
             InitializeComponent();
@@ -35,6 +36,7 @@ namespace Login
             LB_MaKhoa.Text = MaKhoa;
             LB_TenKhoa.Text = TenKhoa;
             LB_HVT_GV.Text = HVT_GV;
+            this.TenLop = TenLop;
         }
 
         private void LB_ChangePWD_Click(object sender, EventArgs e)
@@ -62,7 +64,9 @@ namespace Login
         private void ChucNang_RL_Click(object sender, EventArgs e)
         {
             DS_Sinhvien dS_Sinhvien = new DS_Sinhvien();
-            dS_Sinhvien.MaLop = MaLop;
+            dS_Sinhvien.MaLop = this.MaLop;
+            dS_Sinhvien.TenLop = this.TenLop;
+            dS_Sinhvien.LoaiTK = this.LoaiTK;
             dS_Sinhvien.ShowDialog();   
         }
     }

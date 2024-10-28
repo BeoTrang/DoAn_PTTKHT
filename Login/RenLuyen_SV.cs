@@ -57,6 +57,7 @@ namespace Login
 
         private void RenLuyen_SV_Load(object sender, EventArgs e)
         {
+            MessageBox.Show(LoaiTK);
             LB_SUM_SV.Hide();
             LB_SUM_CVHT.Hide();
             LB_SUM_KHOA.Hide();
@@ -74,7 +75,7 @@ namespace Login
         public void TongDiem_Load()
         {
             int SumSV = 0, SumCVHT = 0, SumKHOA = 0, Tong = 0;
-            int[] DiemCong = {1, 2, 3, 6, 7, 15, 16, 17, 21, 22, 23, 24, 27, 28, 29};
+            int[] DiemCong = {1, 2, 3, 6, 7, 15, 16, 17, 21, 22, 23, 24, 27, 28, 29, 30};
             int[] DiemTru = {4, 5, 8, 9, 10, 11, 12, 13, 14, 18, 19, 20, 25, 26, 31, 32};
             switch (LoaiTK)
             {
@@ -88,13 +89,13 @@ namespace Login
                         }
                         for(int i = 0; i < DiemTru.Length; i++)
                         {
-                            SumSV -= DiemNew[DiemTru[i]];
-                            SumCVHT -= CVHT[DiemTru[i]];
-                            SumKHOA -= KHOA[DiemTru[i]];
+                            SumSV += DiemNew[(DiemTru[i])];
+                            SumCVHT += CVHT[(DiemTru[i])];
+                            SumKHOA += KHOA[(DiemTru[i])]; 
                         }
                         break;
                     }
-                case "CVHT":
+                case "GV":
                     {
                         for (int i = 0; i < DiemCong.Length; i++)
                         {
@@ -104,9 +105,9 @@ namespace Login
                         }
                         for (int i = 0; i < DiemTru.Length; i++)
                         {
-                            SumSV -= SV[DiemTru[i]];
-                            SumCVHT -= DiemNew[DiemTru[i]];
-                            SumKHOA -= KHOA[DiemTru[i]];
+                            SumSV += SV[(DiemTru[i])];
+                            SumCVHT += DiemNew[(DiemTru[i])];
+                            SumKHOA += KHOA[(DiemTru[i])];
                         }
                         break;
                     }
@@ -120,9 +121,9 @@ namespace Login
                         }
                         for (int i = 0; i < DiemTru.Length; i++)
                         {
-                            SumSV -= SV[DiemTru[i]];
-                            SumCVHT -= CVHT[DiemTru[i]];
-                            SumKHOA -= DiemNew[DiemTru[i]];
+                            SumSV += SV[DiemTru[i]];
+                            SumCVHT += CVHT[DiemTru[i]];
+                            SumKHOA += DiemNew[DiemTru[i]];
                         }
                         break;
                     }
@@ -138,7 +139,7 @@ namespace Login
             }
             for (int i = 0; i < DiemTru.Length; i++)
             {
-                Tong -= KHOA[DiemTru[i]];
+                Tong += KHOA[DiemTru[i]];
             }
             LB_SUM_SV.Text = SumSV.ToString();
             LB_SUM_CVHT.Text = SumCVHT.ToString();
