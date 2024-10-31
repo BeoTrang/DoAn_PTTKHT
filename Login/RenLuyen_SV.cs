@@ -349,11 +349,11 @@ namespace Login
                     DGV.Rows[(row[i] - 1)].Cells[4].Value = DiemNew[i].ToString();
                 }
             }
-            else
+            else if (LoaiTK=="KHOA")
             {
                 for (int i = 1; i <= 32; i++)
                 {
-                    DGV.Rows[(row[i] - 1)].Cells[4].Value = DiemNew[i].ToString();
+                    DGV.Rows[(row[i] - 1)].Cells[5].Value = DiemNew[i].ToString();
                 }
             }
             TongDiem_Load();

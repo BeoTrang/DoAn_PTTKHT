@@ -53,6 +53,7 @@ namespace Login
             ShowClass showClass = new ShowClass();
             showClass.MaKhoa = this.MaKhoa;
             showClass.TenKhoa=this.TenKhoa;
+            showClass.LoaiTK=this.LoaiTK;
             showClass.ShowDialog();
         }
     }
