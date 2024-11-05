@@ -445,7 +445,7 @@
             this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "mainGV";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MainGV";
+            this.Text = "Trang chủ";
             this.Load += new System.EventHandler(this.mainGV_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

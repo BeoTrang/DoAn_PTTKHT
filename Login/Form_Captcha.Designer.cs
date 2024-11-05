@@ -40,14 +40,14 @@
             // 
             this.PicBox_Captcha.Location = new System.Drawing.Point(30, 37);
             this.PicBox_Captcha.Name = "PicBox_Captcha";
-            this.PicBox_Captcha.Size = new System.Drawing.Size(400, 400);
+            this.PicBox_Captcha.Size = new System.Drawing.Size(400, 171);
             this.PicBox_Captcha.TabIndex = 0;
             this.PicBox_Captcha.TabStop = false;
             // 
             // TB_Captcha
             // 
             this.TB_Captcha.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TB_Captcha.Location = new System.Drawing.Point(158, 478);
+            this.TB_Captcha.Location = new System.Drawing.Point(155, 253);
             this.TB_Captcha.Multiline = true;
             this.TB_Captcha.Name = "TB_Captcha";
             this.TB_Captcha.Size = new System.Drawing.Size(173, 31);
@@ -55,7 +55,7 @@
             // 
             // BT_Captcha
             // 
-            this.BT_Captcha.Location = new System.Drawing.Point(343, 478);
+            this.BT_Captcha.Location = new System.Drawing.Point(340, 253);
             this.BT_Captcha.Name = "BT_Captcha";
             this.BT_Captcha.Size = new System.Drawing.Size(87, 31);
             this.BT_Captcha.TabIndex = 2;
@@ -66,7 +66,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 483);
+            this.label1.Location = new System.Drawing.Point(23, 258);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(126, 21);
             this.label1.TabIndex = 3;
@@ -74,7 +74,7 @@
             // 
             // BT_reloadCaptcha
             // 
-            this.BT_reloadCaptcha.Location = new System.Drawing.Point(355, 443);
+            this.BT_reloadCaptcha.Location = new System.Drawing.Point(352, 218);
             this.BT_reloadCaptcha.Name = "BT_reloadCaptcha";
             this.BT_reloadCaptcha.Size = new System.Drawing.Size(75, 29);
             this.BT_reloadCaptcha.TabIndex = 4;
@@ -86,7 +86,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(466, 531);
+            this.ClientSize = new System.Drawing.Size(466, 298);
             this.Controls.Add(this.BT_reloadCaptcha);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.BT_Captcha);
