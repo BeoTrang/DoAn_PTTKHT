@@ -26,6 +26,8 @@ namespace Login
 
         private void ShowClass_Load(object sender, EventArgs e)
         {
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             Row = -1;
             DGV.Rows.Clear();
             DGV.Columns.Clear();
@@ -49,8 +51,6 @@ namespace Login
                 Row = e.RowIndex;
                 MaLop = DGV.Rows[Row].Cells[0].Value.ToString();
                 TenLop = DGV.Rows[Row].Cells[1].Value.ToString();
-                MessageBox.Show(MaLop);
-                MessageBox.Show(TenLop);
             }
         }
 

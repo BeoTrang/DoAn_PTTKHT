@@ -67,6 +67,8 @@ namespace Login
 
         private void ChangPWD_Load(object sender, EventArgs e)
         {
+            this.MaximizeBox = false;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
             TB_newPWD_1.PasswordChar = '*';
             TB_newPWD_2.PasswordChar = '*';
             TB_oldPWD.PasswordChar = '*';

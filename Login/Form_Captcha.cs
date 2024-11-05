@@ -57,6 +57,8 @@ namespace Login
         private void Captcha_Load(object sender, EventArgs e)
         {
             New_Captcha();
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
         }
         public void New_Captcha()
         {

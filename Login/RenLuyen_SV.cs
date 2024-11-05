@@ -57,7 +57,8 @@ namespace Login
 
         private void RenLuyen_SV_Load(object sender, EventArgs e)
         {
-            MessageBox.Show(LoaiTK);
+            this.MaximizeBox = false;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
             LB_SUM_SV.Hide();
             LB_SUM_CVHT.Hide();
             LB_SUM_KHOA.Hide();

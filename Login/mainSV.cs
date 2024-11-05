@@ -53,6 +53,8 @@ namespace Login
 
         private void mainSV_Load(object sender, EventArgs e)
         {
+            this.MaximizeBox = false;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
             LB_uid.Text = MSV;
             DataBase_SQL dataBase_SQL = new DataBase_SQL();
             var (HVT_SV, MaLop, TenLop, MaKhoa, TenKhoa, MGV, HVT_GV) = dataBase_SQL.GetSV(MSV);

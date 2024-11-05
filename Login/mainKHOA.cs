@@ -31,6 +31,8 @@ namespace Login
 
         private void mainKHOA_Load(object sender, EventArgs e)
         {
+            this.MaximizeBox = false;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
             DataBase_SQL dataBase_SQL = new DataBase_SQL();
             var (HVT, MaKhoa, TenKhoa) = dataBase_SQL.getKHOA(MGV);
             LB_uid.Text = MGV;

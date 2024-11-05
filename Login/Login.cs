@@ -101,6 +101,8 @@ namespace Login
 
         private void Login_Load(object sender, EventArgs e)
         {
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             TB_pwd.PasswordChar = '*';
             TB_uid.Text = "K215480106129";
         }

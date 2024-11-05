@@ -24,6 +24,8 @@ namespace Login
 
         private void mainGV_Load(object sender, EventArgs e)
         {
+            this.MaximizeBox = false;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
             LB_uid.Text = MGV;
             DataBase_SQL dataBase_SQL = new DataBase_SQL();
             var (HVT_GV, MaLop_1, TenLop, MaKhoa, TenKhoa ) = dataBase_SQL.GetGV(MGV);

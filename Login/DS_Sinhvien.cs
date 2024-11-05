@@ -25,6 +25,8 @@ namespace Login
 
         private void DS_Sinhvien_Load(object sender, EventArgs e)
         {
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             LB_TenLop.Text = TenLop;
             Row = -1;
             CreateDGV();
