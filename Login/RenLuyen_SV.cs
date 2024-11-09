@@ -22,7 +22,9 @@ namespace Login
         public int[] KHOA { get; set; }
         public int[] DiemNew { get; set; }
         public string MB {  get; set; }
+        public string Tieuchi { get; set; }
         public List<string> MaHK {  get; set; }
+        public string MaHK1 { get; set; }
         public List<string> TenHK {  get; set; }
         public RenLuyen_SV()
         {
@@ -173,6 +175,7 @@ namespace Login
             DGV.Rows.Clear();
             DGV.Columns.Clear();
             DataBase_SQL dataBase_SQL = new DataBase_SQL();
+            MaHK1 = MaHK_Input;
             var (MB_SV, MB_CVHT, MB_KHOA) = dataBase_SQL.getMaBang(MSV, MaHK_Input);
             if (MB_SV==null ||MB_CVHT==null || MB_KHOA == null)
             {
@@ -199,8 +202,9 @@ namespace Login
             DGV.Columns.Add("3", "Điểm tự đánh giá");
             DGV.Columns.Add("4", "Điểm CVHT");
             DGV.Columns.Add("5", "Điểm khoa");
+            DGV.Columns.Add("6", "Minh chứng");
             DiemNew = new int[SV.Length];
-            for (int i = 0; i <= 5; i++)
+            for (int i = 0; i <= 6; i++)
             {
                 DGV.Columns[i].ReadOnly = true;
             }
@@ -240,53 +244,53 @@ namespace Login
             }
             DGV.Rows.Add("1", "ĐÁNH GIÁ Ý THỨC THAM GIA HỌC TẬP: (Khung điểm đánh giá từ 0 - 20 điểm)", "20", "20", "20", "20");
             DGV.Rows.Add("", "* Phần cộng điểm", "", "", "", "");
-            DGV.Rows.Add("1.1", "Điểm thưởng về học tập.", "5", SV[1], CVHT[1], KHOA[1]);
-            DGV.Rows.Add("1.2", "Tham gia các hoạt động khoa học sinh viên (NCKH, bài báo, thi olympic, Robocon, sáng tạo, khởi nghiệp....).", "7", SV[2], CVHT[2], KHOA[2]);
-            DGV.Rows.Add("1.3", "Thực hiện nội quy, quy chế học tập.", "11", SV[3], CVHT[3], KHOA[3]);
+            DGV.Rows.Add("1.1", "Điểm thưởng về học tập.", "5", SV[1], CVHT[1], KHOA[1], "Xem");
+            DGV.Rows.Add("1.2", "Tham gia các hoạt động khoa học sinh viên (NCKH, bài báo, thi olympic, Robocon, sáng tạo, khởi nghiệp....).", "7", SV[2], CVHT[2], KHOA[2], "Xem");
+            DGV.Rows.Add("1.3", "Thực hiện nội quy, quy chế học tập.", "11", SV[3], CVHT[3], KHOA[3], "Xem");
             DGV.Rows.Add("", "* Phần trừ điểm", "", "", "", "");
-            DGV.Rows.Add("1.4", "Tỷ lệ tham gia lớp học dưới 80% (cứ giảm 5% trừ thêm 1 điểm); nếu dưới 50% trừ 10 điểm. (Tối đa -10).", "0", SV[4], CVHT[4], KHOA[4]);
-            DGV.Rows.Add("1.5", "Vi phạm quy chế thi và kiểm tra (trừ theo mức độ vi phạm: Khiển trách trừ điểm 5 điểm; Cảnh cáo trừ 10 điểm; Đình chỉ trừ 15 điểm; không tiếp tục trừ tại mục II.5 và II.6). (Tối đa -15).", "0", SV[5], CVHT[5], KHOA[5]);
+            DGV.Rows.Add("1.4", "Tỷ lệ tham gia lớp học dưới 80% (cứ giảm 5% trừ thêm 1 điểm); nếu dưới 50% trừ 10 điểm. (Tối đa -10).", "0", SV[4], CVHT[4], KHOA[4], "Xem");
+            DGV.Rows.Add("1.5", "Vi phạm quy chế thi và kiểm tra (trừ theo mức độ vi phạm: Khiển trách trừ điểm 5 điểm; Cảnh cáo trừ 10 điểm; Đình chỉ trừ 15 điểm; không tiếp tục trừ tại mục II.5 và II.6). (Tối đa -15).", "0", SV[5], CVHT[5], KHOA[5], "Xem");
             DGV.Rows.Add("2", "ĐÁNH GIÁ Ý THỨC VÀ KẾT QUẢ CHẤP HÀNH NỘI QUY, QUY CHẾ TRONG NHÀ TRƯỜNG: (Khung điểm đánh giá từ 0 - 25 điểm).", "25", "25", "25", "25");
             DGV.Rows.Add("", "* Phần cộng điểm", "", "", "", "");
-            DGV.Rows.Add("2.1", "Có ý thức chấp hành tốt các văn bản chỉ đạo của ngành, của cơ quan chỉ đạo cấp trên triển khai trong trường.", "5", SV[6], CVHT[6], KHOA[6]);
-            DGV.Rows.Add("2.2", "Ý thức chấp hành các nội quy, quy chế và các quy định của trường.", "20", SV[7], CVHT[7], KHOA[7]);
+            DGV.Rows.Add("2.1", "Có ý thức chấp hành tốt các văn bản chỉ đạo của ngành, của cơ quan chỉ đạo cấp trên triển khai trong trường.", "5", SV[6], CVHT[6], KHOA[6], "Xem");
+            DGV.Rows.Add("2.2", "Ý thức chấp hành các nội quy, quy chế và các quy định của trường.", "20", SV[7], CVHT[7], KHOA[7], "Xem");
             DGV.Rows.Add("", "* Phần trừ điểm", "", "", "", "");
-            DGV.Rows.Add("2.3", "Không tham gia Bảo hiểm Y tế. (-20).", "0", SV[8], CVHT[8], KHOA[8]);
-            DGV.Rows.Add("2.4", "Vi phạm quy định đóng học phí và các loại phí khác theo quy định. (-5).", "0", SV[9], CVHT[9], KHOA[9]);
-            DGV.Rows.Add("2.5", "Vi phạm Quy chế HSSV bị kỷ luật mức cảnh cáo trở lên. (-20).", "0", SV[10], CVHT[10], KHOA[10]);
-            DGV.Rows.Add("2.6", "Vi phạm Quy chế HSSV bị kỷ luật khiển trách. (-10).", "0", SV[11], CVHT[11], KHOA[11]);
-            DGV.Rows.Add("2.7", "Vi phạm quy định nội, ngoại trú. (-20).", "0", SV[12], CVHT[12], KHOA[12]);
-            DGV.Rows.Add("2.8", "Không tham gia các hoạt động khảo sát khi Nhà trường triển khai. (-5/ lần).", "0", SV[13], CVHT[13], KHOA[13]);
-            DGV.Rows.Add("2.9", "Vi phạm các nội quy liên quan đến giảng đường, thư viện, phòng thí nghiệm … đến mức bị lập biên bản xử lý. (-10/ lần).", "0", SV[14], CVHT[14], KHOA[14]);
+            DGV.Rows.Add("2.3", "Không tham gia Bảo hiểm Y tế. (-20).", "0", SV[8], CVHT[8], KHOA[8], "Xem");
+            DGV.Rows.Add("2.4", "Vi phạm quy định đóng học phí và các loại phí khác theo quy định. (-5).", "0", SV[9], CVHT[9], KHOA[9], "Xem");
+            DGV.Rows.Add("2.5", "Vi phạm Quy chế HSSV bị kỷ luật mức cảnh cáo trở lên. (-20).", "0", SV[10], CVHT[10], KHOA[10], "Xem");
+            DGV.Rows.Add("2.6", "Vi phạm Quy chế HSSV bị kỷ luật khiển trách. (-10).", "0", SV[11], CVHT[11], KHOA[11], "Xem");
+            DGV.Rows.Add("2.7", "Vi phạm quy định nội, ngoại trú. (-20).", "0", SV[12], CVHT[12], KHOA[12], "Xem");
+            DGV.Rows.Add("2.8", "Không tham gia các hoạt động khảo sát khi Nhà trường triển khai. (-5/ lần).", "0", SV[13], CVHT[13], KHOA[13], "Xem");
+            DGV.Rows.Add("2.9", "Vi phạm các nội quy liên quan đến giảng đường, thư viện, phòng thí nghiệm … đến mức bị lập biên bản xử lý. (-10/ lần).", "0", SV[14], CVHT[14], KHOA[14], "Xem");
             DGV.Rows.Add("3", "ĐÁNH GIÁ VỀ Ý THỨC VÀ KẾT QUẢ THAM GIA CÁC HOẠT ĐỘNG CHÍNH TRỊ- XÃ HỘI, VĂN HÓA, VĂN NGHỆ, THỂ THAO, PHÒNG CHỐNG CÁC TỆ NẠN XÃ HỘI: (Khung điểm đánh giá từ 0 - 20 điểm)", "20", "20", "20", "20");
             DGV.Rows.Add("", "* Phần cộng điểm", "", "", "", "");
-            DGV.Rows.Add("3.1", "Tham gia đầy đủ hoạt động tập thể của Lớp, Chi đoàn, Liên chi đoàn, Liên chi hội, Hội sinh viên (Tùy mức độ tham gia).", "5", SV[15], CVHT[15], KHOA[15]);
-            DGV.Rows.Add("3.2", "Tham gia các hoạt động ngoại khóa do Nhà trường, địa phương tổ chức.", "10", SV[16], CVHT[16], KHOA[16]);
-            DGV.Rows.Add("3.3", "Có thành tích trong học tập, rèn luyện, tham gia hoạt động văn nghệ, thể thao, đấu tranh, phòng chống TNXH, được khen thưởng cấp.", "5", SV[17], CVHT[17], KHOA[17]);
+            DGV.Rows.Add("3.1", "Tham gia đầy đủ hoạt động tập thể của Lớp, Chi đoàn, Liên chi đoàn, Liên chi hội, Hội sinh viên (Tùy mức độ tham gia).", "5", SV[15], CVHT[15], KHOA[15], "Xem");
+            DGV.Rows.Add("3.2", "Tham gia các hoạt động ngoại khóa do Nhà trường, địa phương tổ chức.", "10", SV[16], CVHT[16], KHOA[16], "Xem");
+            DGV.Rows.Add("3.3", "Có thành tích trong học tập, rèn luyện, tham gia hoạt động văn nghệ, thể thao, đấu tranh, phòng chống TNXH, được khen thưởng cấp.", "5", SV[17], CVHT[17], KHOA[17], "Xem");
             DGV.Rows.Add("", "* Phần trừ điểm", "", "", "", "");
-            DGV.Rows.Add("3.4", "Bỏ sinh hoạt lớp, sinh hoạt Đoàn, sinh hoạt Hội sinh viên theo kế hoạch. (-5/ lần họp).", "0", SV[18], CVHT[18], KHOA[18]);
-            DGV.Rows.Add("3.5", "Không tham các hoạt động do khoa điều động (có danh sách cụ thể). (-5/ lần).", "0", SV[19], CVHT[19], KHOA[19]);
-            DGV.Rows.Add("3.6", "Sinh viên không hoàn thành chương trình tuần sinh hoạt công dân đầu khóa, cuối khóa, đầu năm học. (-10).", "0", SV[20], CVHT[20], KHOA[20]);
+            DGV.Rows.Add("3.4", "Bỏ sinh hoạt lớp, sinh hoạt Đoàn, sinh hoạt Hội sinh viên theo kế hoạch. (-5/ lần họp).", "0", SV[18], CVHT[18], KHOA[18], "Xem");
+            DGV.Rows.Add("3.5", "Không tham các hoạt động do khoa điều động (có danh sách cụ thể). (-5/ lần).", "0", SV[19], CVHT[19], KHOA[19], "Xem");
+            DGV.Rows.Add("3.6", "Sinh viên không hoàn thành chương trình tuần sinh hoạt công dân đầu khóa, cuối khóa, đầu năm học. (-10).", "0", SV[20], CVHT[20], KHOA[20], "Xem");
             DGV.Rows.Add("4", "ĐÁNH GIÁ VỀ PHẨM CHẤT CÔNG DÂN VÀ QUAN HỆ VỚI CỘNG ĐỒNG: (Khung điểm đánh giá từ 0 - 25 điểm)", "", "", "", "");
             DGV.Rows.Add("", "* Phần cộng điểm", "", "", "", "");
-            DGV.Rows.Add("4.1", "Chấp hành tốt và tham gia tuyên truyền các chủ trương của Đảng, chính sách, pháp luật của Nhà nước trong cộng đồng.", "5", SV[21], CVHT[21], KHOA[21]);
-            DGV.Rows.Add("4.2", "Tham gia hoạt động hỗ trợ nhau trong học tập (Có đăng ký từ đầu kỳ và minh chứng kết quả cụ thể), hoạt động kết nối cộng động (STEM, truyền thông, tuyên truyền tuyển sinh, tham gia đội tự quản…).", "10", SV[22], CVHT[22], KHOA[22]);
-            DGV.Rows.Add("4.3", "Tham gia công tác tình nguyện, chung sức vì cộng đồng, có tinh thần chia sẻ, giúp đỡ người thân, người có khó khăn, hoạn nạn, các hoạt động tại địa phương nơi cư trú (Tùy mức độ tham gia, có minh chứng cụ thể).", "10", SV[23], CVHT[23], KHOA[23]);
-            DGV.Rows.Add("4.4", "Giữ gìn đoàn kết nội bộ, quan hệ tốt với bạn bè, tập thể nơi cư trú.", "5", SV[24], CVHT[24], KHOA[24]);
+            DGV.Rows.Add("4.1", "Chấp hành tốt và tham gia tuyên truyền các chủ trương của Đảng, chính sách, pháp luật của Nhà nước trong cộng đồng.", "5", SV[21], CVHT[21], KHOA[21], "Xem");
+            DGV.Rows.Add("4.2", "Tham gia hoạt động hỗ trợ nhau trong học tập (Có đăng ký từ đầu kỳ và minh chứng kết quả cụ thể), hoạt động kết nối cộng động (STEM, truyền thông, tuyên truyền tuyển sinh, tham gia đội tự quản…).", "10", SV[22], CVHT[22], KHOA[22], "Xem");
+            DGV.Rows.Add("4.3", "Tham gia công tác tình nguyện, chung sức vì cộng đồng, có tinh thần chia sẻ, giúp đỡ người thân, người có khó khăn, hoạn nạn, các hoạt động tại địa phương nơi cư trú (Tùy mức độ tham gia, có minh chứng cụ thể).", "10", SV[23], CVHT[23], KHOA[23], "Xem");
+            DGV.Rows.Add("4.4", "Giữ gìn đoàn kết nội bộ, quan hệ tốt với bạn bè, tập thể nơi cư trú.", "5", SV[24], CVHT[24], KHOA[24], "Xem");
             DGV.Rows.Add("", "* Phần trừ điểm", "", "", "", "");
-            DGV.Rows.Add("4.5", "Vi phạm pháp luật (chưa đến mức truy cứu trách nhiệm hình sự), thiếu ý thức tham gia giữ gìn trật tự an toàn xã hội, không chấp hành đầy đủ đường lối, chủ trương của Đảng, chính sách, pháp luật của Nhà nước. (-10).", "0", SV[25], CVHT[25], KHOA[25]);
-            DGV.Rows.Add("4.6", "Gây mất đoàn kết trong lớp, trong trường, trong KTX, địa bàn nơi cư trú. (-5/ lần).", "0", SV[26], CVHT[26], KHOA[26]);
+            DGV.Rows.Add("4.5", "Vi phạm pháp luật (chưa đến mức truy cứu trách nhiệm hình sự), thiếu ý thức tham gia giữ gìn trật tự an toàn xã hội, không chấp hành đầy đủ đường lối, chủ trương của Đảng, chính sách, pháp luật của Nhà nước. (-10).", "0", SV[25], CVHT[25], KHOA[25], "Xem");
+            DGV.Rows.Add("4.6", "Gây mất đoàn kết trong lớp, trong trường, trong KTX, địa bàn nơi cư trú. (-5/ lần).", "0", SV[26], CVHT[26], KHOA[26], "Xem");
             DGV.Rows.Add("5", "ĐÁNH GIÁ VỀ Ý THỨC VÀ KẾT QUẢ THAM GIA PHỤ TRÁCH LỚP, CÁC ĐOÀN THỂ, TỔ CHỨC TRONG NHÀ TRƯỜNG, HOẶC ĐẠT ĐƯỢC THÀNH TÍCH ĐẶC BIỆT TRONG HỌC TẬP, RÈN LUYÊN CỦA SINH VIÊN (Khung điểm đánh giá từ 0 - 10 điểm)", "10", "0", "0", "0");
             DGV.Rows.Add("", "* Phần cộng điểm", "", "", "", "");
-            DGV.Rows.Add("5.1", "Sinh viên tham gia cấp ủy chi bộ, Ban chấp hành Đoàn, Hội SV từ cấp chi đoàn, chi hội trở lên hoàn thành tốt nhiệm vụ, có uy tín và hiệu quả trong công việc được phân công.", "5", SV[27], CVHT[27], KHOA[27]);
-            DGV.Rows.Add("5.2", "Sinh viên tham gia cấp ủy chi bộ, Ban chấp hành Đoàn, Hội SV từ cấp chi đoàn, chi hội trở lên; khi tập thể tham gia, phụ trách được cấp trên khen thưởng.", "3", SV[28], CVHT[28], KHOA[28]);
-            DGV.Rows.Add("5.3", "Tập thể phụ trách có điểm rèn luyện đạt 85% xếp loại từ khá trở lên.", "2", SV[29], CVHT[29], KHOA[29]);
-            DGV.Rows.Add("5.4", "Sinh viên đạt được các thành tích đặc biệt trong học tập, rèn luyện: đạt các danh hiệu: SV giỏi, SV xuất sắc, SV 5 tốt từ cấp tỉnh trở lên, Sao tháng riêng, Đảng viên xếp loại đủ tư cách hoành thành XS nhiệm vụ, SV có thành tích đặc biệt xuất sắc trong hoạt động Văn nghệ, thể thao.", "10", SV[30], CVHT[30], KHOA[30]);
+            DGV.Rows.Add("5.1", "Sinh viên tham gia cấp ủy chi bộ, Ban chấp hành Đoàn, Hội SV từ cấp chi đoàn, chi hội trở lên hoàn thành tốt nhiệm vụ, có uy tín và hiệu quả trong công việc được phân công.", "5", SV[27], CVHT[27], KHOA[27], "Xem");
+            DGV.Rows.Add("5.2", "Sinh viên tham gia cấp ủy chi bộ, Ban chấp hành Đoàn, Hội SV từ cấp chi đoàn, chi hội trở lên; khi tập thể tham gia, phụ trách được cấp trên khen thưởng.", "3", SV[28], CVHT[28], KHOA[28], "Xem");
+            DGV.Rows.Add("5.3", "Tập thể phụ trách có điểm rèn luyện đạt 85% xếp loại từ khá trở lên.", "2", SV[29], CVHT[29], KHOA[29], "Xem");
+            DGV.Rows.Add("5.4", "Sinh viên đạt được các thành tích đặc biệt trong học tập, rèn luyện: đạt các danh hiệu: SV giỏi, SV xuất sắc, SV 5 tốt từ cấp tỉnh trở lên, Sao tháng riêng, Đảng viên xếp loại đủ tư cách hoành thành XS nhiệm vụ, SV có thành tích đặc biệt xuất sắc trong hoạt động Văn nghệ, thể thao.", "10", SV[30], CVHT[30], KHOA[30], "Xem");
             DGV.Rows.Add("", "* Phần trừ điểm", "", "", "", "");
-            DGV.Rows.Add("5.5", "Không tổ chức thực hiện sinh hoạt tập thể theo kế hoạch của khoa, trường, Đoàn thanh niên, hội sinh viên cấp trên. (-5/ lần).", "0", SV[31], CVHT[31], KHOA[31]);
-            DGV.Rows.Add("5.6", "Tập thể lớp có điểm rèn luyện dưới 60% đạt loại trung bình trở lên. (-5).", "0", SV[32], CVHT[32], KHOA[32]);
+            DGV.Rows.Add("5.5", "Không tổ chức thực hiện sinh hoạt tập thể theo kế hoạch của khoa, trường, Đoàn thanh niên, hội sinh viên cấp trên. (-5/ lần).", "0", SV[31], CVHT[31], KHOA[31], "Xem");
+            DGV.Rows.Add("5.6", "Tập thể lớp có điểm rèn luyện dưới 60% đạt loại trung bình trở lên. (-5).", "0", SV[32], CVHT[32], KHOA[32], "Xem");
 
-            DGV.Rows[0].ReadOnly = true;
+            DGV.Rows[0].ReadOnly = true;    
             DGV.Rows[1].ReadOnly = true;
             DGV.Rows[5].ReadOnly = true;
             DGV.Rows[8].ReadOnly = true;
@@ -366,6 +370,7 @@ namespace Login
             int KT;
             int row = e.RowIndex;
             int column = e.ColumnIndex;
+            if (column == 6) return;
             var TEST = DGV.Rows[row].Cells[column].Value.ToString().Trim();
             if (!int.TryParse(TEST, out int result))
             {
@@ -834,6 +839,35 @@ namespace Login
                 }
             }
             TongDiem_Load();
+        }
+
+        private void DGV_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int[] row = { 2, 3, 4, 6, 7, 10, 11, 13, 14, 15, 16, 17, 18, 19, 22, 23, 24, 26, 27, 28, 31, 32, 33, 34, 36, 37, 40, 41, 42, 43, 45, 46 };
+            int columns = e.ColumnIndex;
+            int rows = e.RowIndex;   
+            if (columns != 6)
+            {
+                return;
+            }
+            else
+            {
+                for (int i = 0; i < row.Length; i++)
+                {
+                    if (row[i] == rows)
+                    {
+                        Tieuchi = DGV.Rows[rows].Cells[0].Value.ToString(); 
+                        MessageBox.Show(Tieuchi);
+                        ShowMC showMC = new ShowMC();
+                        showMC.MSV=this.MSV;
+                        showMC.MaHK=this.MaHK1;
+                        showMC.Tieuchi=this.Tieuchi;
+                        showMC.LoaiTK = this.LoaiTK;
+                        showMC.Show();
+                        return;
+                    }
+                }
+            }
         }
     }
 }

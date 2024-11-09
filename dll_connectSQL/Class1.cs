@@ -79,7 +79,7 @@ namespace dll_connectSQL
                     TenKhoa = reader["TenKhoa"].ToString();
                 }
             }
-            return (HVT_GV, MaLop, TenLop, MaKhoa, TenKhoa );
+            return (HVT_GV, MaLop, TenLop, MaKhoa, TenKhoa);
         }
 
         public (string, string, string) getKHOA(string MGV)
@@ -315,7 +315,7 @@ namespace dll_connectSQL
 
         public (string, string, string) getMaBang(string MSV, string MaHK)
         {
-            string MB_SV=null, MB_CVHT=null, MB_Khoa=null;
+            string MB_SV = null, MB_CVHT = null, MB_Khoa = null;
             using (SqlConnection conn = new SqlConnection(cnstr))
             {
                 string query = "SELECT MB_SV, MB_CVHT, MB_Khoa FROM Diem_RL WHERE MSV = @MSV AND MaHK = @MaHK";
@@ -329,12 +329,12 @@ namespace dll_connectSQL
                     {
                         MB_SV = reader.GetString(0);
                         MB_CVHT = reader.GetString(1);
-                        MB_Khoa = reader.GetString(2); 
+                        MB_Khoa = reader.GetString(2);
                     }
                     reader.Close();
                 }
                 return (MB_SV, MB_CVHT, MB_Khoa);
-            }    
+            }
         }
         public bool UpdateDiemSV(int[] Diem, string MB)
         {
@@ -558,8 +558,8 @@ namespace dll_connectSQL
         {
             string query = "SELECT [MSV], [HoTen] FROM Thongtin_SV where MaLop = @MaLop";
             DataTable dataTable = new DataTable();
-            
-            using(SqlConnection conn = new SqlConnection(cnstr))
+
+            using (SqlConnection conn = new SqlConnection(cnstr))
             {
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(query, conn))
@@ -591,6 +591,40 @@ namespace dll_connectSQL
                 }
             }
             return dataTable;
+        }
+        public DataTable GetMinhchung(string MSV, string MaHK, string Tieuchi)
+        {
+            DataTable imagesTable = new DataTable();
+            using (SqlConnection conn = new SqlConnection(cnstr))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand("SELECT Anh FROM Minhchung WHERE MSV = @MSV AND MaHK = @MaHK AND Tieuchi = @Tieuchi ", conn))
+                {
+                    cmd.Parameters.AddWithValue("@MSV", MSV);
+                    cmd.Parameters.AddWithValue("@MaHK", MaHK);
+                    cmd.Parameters.AddWithValue("@Tieuchi", Tieuchi);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        imagesTable.Load(reader);
+                    }
+                }
+            }
+            return imagesTable;
+        }
+        public void LuuMinhchung(string MSV, string MaHK, string Tieuchi, byte[] imageData)
+        {
+            using (SqlConnection conn = new SqlConnection(cnstr))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO Minhchung (MSV, MaHK, Tieuchi, Anh) VALUES (@MSV, @MaHK, @Tieuchi, @ImageData)", conn))
+                {
+                    cmd.Parameters.Add("@ImageData", SqlDbType.VarBinary).Value = imageData;
+                    cmd.Parameters.AddWithValue("@MSV", MSV);
+                    cmd.Parameters.AddWithValue("@MaHK", MaHK);
+                    cmd.Parameters.AddWithValue("@Tieuchi", Tieuchi);
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
     }
 }

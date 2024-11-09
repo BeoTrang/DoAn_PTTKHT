@@ -85,6 +85,7 @@
             this.DGV.Name = "DGV";
             this.DGV.Size = new System.Drawing.Size(1279, 478);
             this.DGV.TabIndex = 2;
+            this.DGV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_CellContentClick);
             this.DGV.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_CellEndEdit);
             // 
             // comboBox_HK

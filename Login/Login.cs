@@ -105,6 +105,7 @@ namespace Login
             this.MaximizeBox = false;
             TB_pwd.PasswordChar = '*';
             TB_uid.Text = "K215480106129";
+            
         }
     }
 }

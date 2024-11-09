@@ -105,6 +105,12 @@
     <Compile Include="ShowClass.Designer.cs">
       <DependentUpon>ShowClass.cs</DependentUpon>
     </Compile>
+    <Compile Include="ShowMC.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShowMC.Designer.cs">
+      <DependentUpon>ShowMC.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="ChangPWD.resx">
       <DependentUpon>ChangPWD.cs</DependentUpon>
     </EmbeddedResource>
@@ -141,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ShowClass.resx">
       <DependentUpon>ShowClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShowMC.resx">
+      <DependentUpon>ShowMC.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
