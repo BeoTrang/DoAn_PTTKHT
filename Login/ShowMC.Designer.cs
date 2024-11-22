@@ -29,32 +29,20 @@
         private void InitializeComponent()
         {
             this.FLP = new System.Windows.Forms.FlowLayoutPanel();
-            this.Upload = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // FLP
             // 
-            this.FLP.Location = new System.Drawing.Point(27, 32);
+            this.FLP.Location = new System.Drawing.Point(25, 22);
             this.FLP.Name = "FLP";
-            this.FLP.Size = new System.Drawing.Size(877, 754);
+            this.FLP.Size = new System.Drawing.Size(863, 754);
             this.FLP.TabIndex = 0;
-            // 
-            // Upload
-            // 
-            this.Upload.Location = new System.Drawing.Point(805, 792);
-            this.Upload.Name = "Upload";
-            this.Upload.Size = new System.Drawing.Size(99, 37);
-            this.Upload.TabIndex = 1;
-            this.Upload.Text = "Tải ảnh";
-            this.Upload.UseVisualStyleBackColor = true;
-            this.Upload.Click += new System.EventHandler(this.Upload_Click);
             // 
             // ShowMC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(916, 856);
-            this.Controls.Add(this.Upload);
+            this.ClientSize = new System.Drawing.Size(913, 799);
             this.Controls.Add(this.FLP);
             this.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(5);
@@ -68,6 +56,5 @@
         #endregion
 
         private System.Windows.Forms.FlowLayoutPanel FLP;
-        private System.Windows.Forms.Button Upload;
     }
 }

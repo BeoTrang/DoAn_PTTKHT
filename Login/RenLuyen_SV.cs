@@ -67,7 +67,7 @@ namespace Login
             LB_XepLoai.Hide();
             LB_Tong.Hide();
             DataBase_SQL dataBase_SQL = new DataBase_SQL();
-            var (MaHK, TenHK) = dataBase_SQL.getHK();
+            var (MaHK, TenHK) = dataBase_SQL.GetHK();
             this.MaHK = MaHK;
             this.TenHK = TenHK;
             for (int i = 0; i < this.TenHK.Count; i++)
@@ -305,6 +305,7 @@ namespace Login
             DGV.Rows[38].ReadOnly = true;
             DGV.Rows[39].ReadOnly = true;
             DGV.Rows[44].ReadOnly = true;
+            DGV.AllowUserToAddRows = false;
             TongDiem_Load();
         }
 
@@ -857,13 +858,12 @@ namespace Login
                     if (row[i] == rows)
                     {
                         Tieuchi = DGV.Rows[rows].Cells[0].Value.ToString(); 
-                        MessageBox.Show(Tieuchi);
-                        ShowMC showMC = new ShowMC();
-                        showMC.MSV=this.MSV;
-                        showMC.MaHK=this.MaHK1;
-                        showMC.Tieuchi=this.Tieuchi;
-                        showMC.LoaiTK = this.LoaiTK;
-                        showMC.Show();
+                        DS_MC dS_MC = new DS_MC();
+                        dS_MC.Tieuchi = Tieuchi;
+                        dS_MC.MSV = this.MSV;
+                        dS_MC.LoaiTK = this.LoaiTK;
+                        dS_MC.MaHK = this.MaHK1;
+                        dS_MC.ShowDialog();
                         return;
                     }
                 }

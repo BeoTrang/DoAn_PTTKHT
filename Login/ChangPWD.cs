@@ -43,7 +43,7 @@ namespace Login
                 return;
             }
             DataBase_SQL dataBase_SQL = new DataBase_SQL();
-            bool checkPWD = dataBase_SQL.CheckPWD(uid, pwd_old);
+            bool checkPWD = dataBase_SQL.CheckAndUpdatePWD(uid, pwd_old, pwd_new_1);
             if (checkPWD == false)
             {
                 MessageBox.Show("Nhập sai mật khẩu cũ hoặc lỗi kết nối!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -51,16 +51,7 @@ namespace Login
             }
             else
             {
-                bool CheckUpdate = dataBase_SQL.updatePWD(uid, pwd_new_1);
-                if (CheckUpdate == false)
-                {
-                    MessageBox.Show("Thay đổi mật khẩu không thành công!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-                else
-                {
-                    MessageBox.Show("Thay đổi mật khẩu thành công!", "Hoàn thành", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                MessageBox.Show("Thay đổi mật khẩu thành công!", "Hoàn thành", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             this.Close();
         }

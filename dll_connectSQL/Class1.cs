@@ -17,18 +17,18 @@ namespace dll_connectSQL
             {
                 using (SqlConnection conn = new SqlConnection(cnstr))
                 {
-                    string query = @"
-                    SELECT LoaiTK 
-                    FROM TaiKhoan 
-                    WHERE uid = @uid AND pwd = @pwd";
+                    string query = "sp_Login";
                     conn.Open();
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
+                        cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@uid", uid);
                         cmd.Parameters.AddWithValue("@pwd", pwd);
                         var result = cmd.ExecuteScalar();
-                        if (result != null) return result.ToString();
-                        else return null;
+                        if (result != null)
+                            return result.ToString();
+                        else
+                            return null;
                     }
                 }
             }
@@ -37,6 +37,7 @@ namespace dll_connectSQL
                 return null;
             }
         }
+
         public (string, string, string, string, string) GetGV(string MGV_input)
         {
             string MaLop = "";
@@ -44,75 +45,48 @@ namespace dll_connectSQL
             string MaKhoa = "";
             string TenKhoa = "";
             string HVT_GV = "";
+
             using (SqlConnection connection = new SqlConnection(cnstr))
             {
                 connection.Open();
-                string query = "SELECT HoTen, MaLop FROM ThongTin_GV WHERE MGV = @MGV";
+                string query = "EXEC GetTTGV @MGV_input";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@MGV", MGV_input);
+                command.Parameters.AddWithValue("@MGV_input", MGV_input);
 
                 SqlDataReader reader = command.ExecuteReader();
-
                 if (reader.Read())
                 {
-                    HVT_GV = reader["HoTen"].ToString();
+                    HVT_GV = reader["HVT_GV"].ToString();
                     MaLop = reader["MaLop"].ToString();
-                }
-            }
-            using (SqlConnection connection = new SqlConnection(cnstr))
-            {
-                connection.Open();
-                string query = @"
-                SELECT Lop.TenLop, Lop.MaKhoa, Khoa.TenKhoa
-                FROM Lop
-                INNER JOIN Khoa ON Lop.MaKhoa = Khoa.MaKhoa
-                WHERE Lop.MaLop = @MaLop";
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@MaLop", MaLop);
-
-                SqlDataReader reader = command.ExecuteReader();
-
-                if (reader.Read())
-                {
                     TenLop = reader["TenLop"].ToString();
                     MaKhoa = reader["MaKhoa"].ToString();
                     TenKhoa = reader["TenKhoa"].ToString();
                 }
             }
+
             return (HVT_GV, MaLop, TenLop, MaKhoa, TenKhoa);
         }
 
         public (string, string, string) getKHOA(string MGV)
         {
-            string MaKhoa = null;
-            string TenKhoa = null;
-            string HoTen = null;
-            string query1 = "SELECT [HoTen], [MaKhoa] FROM ThongTin_GV WHERE MGV = @MGV";
-            string query2 = "SELECT [TenKhoa] FROM KHOA WHERE MaKhoa = @MaKhoa";
+            string HoTen = "";
+            string MaKhoa = "";
+            string TenKhoa = "";
+
             using (SqlConnection connection = new SqlConnection(cnstr))
             {
                 connection.Open();
-                SqlCommand command = new SqlCommand(query1, connection);
+                string query = "EXEC GetTTKHOA @MGV";
+                SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@MGV", MGV);
+
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
                     HoTen = reader["HoTen"].ToString();
                     MaKhoa = reader["MaKhoa"].ToString();
-                }
-                reader.Close();
-            }
-            using (SqlConnection connection = new SqlConnection(cnstr))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand(query2, connection);
-                command.Parameters.AddWithValue("@MaKhoa", MaKhoa);
-                SqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                {
                     TenKhoa = reader["TenKhoa"].ToString();
                 }
-                reader.Close();
             }
             return (HoTen, MaKhoa, TenKhoa);
         }
@@ -126,75 +100,48 @@ namespace dll_connectSQL
             string TenKhoa = "";
             string MGV = "";
             string HVT_GV = "";
-            using (SqlConnection connection = new SqlConnection(cnstr))
+
+            using (SqlConnection conn = new SqlConnection(cnstr))
             {
-                connection.Open();
-                string query = "SELECT HoTen, MaLop FROM ThongTin_SV WHERE MSV = @MSV";
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@MSV", MSV_input);
+                conn.Open();
+                SqlCommand command = new SqlCommand("GetTTSV", conn);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@MSV_input", MSV_input);
 
                 SqlDataReader reader = command.ExecuteReader();
-
                 if (reader.Read())
                 {
-                    HVT_SV = reader["HoTen"].ToString();
+                    HVT_SV = reader["HVT_SV"].ToString();
                     MaLop = reader["MaLop"].ToString();
-                }
-            }
-            using (SqlConnection connection = new SqlConnection(cnstr))
-            {
-                connection.Open();
-                string query = @"
-                SELECT Lop.TenLop, Lop.MaKhoa, Khoa.TenKhoa
-                FROM Lop
-                INNER JOIN Khoa ON Lop.MaKhoa = Khoa.MaKhoa
-                WHERE Lop.MaLop = @MaLop";
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@MaLop", MaLop);
-
-                SqlDataReader reader = command.ExecuteReader();
-
-                if (reader.Read())
-                {
                     TenLop = reader["TenLop"].ToString();
                     MaKhoa = reader["MaKhoa"].ToString();
                     TenKhoa = reader["TenKhoa"].ToString();
-                }
-            }
-            using (SqlConnection connection = new SqlConnection(cnstr))
-            {
-                connection.Open();
-                string query = @"
-                SELECT MGV, HoTen
-                FROM ThongTin_GV
-                WHERE MaLop = @MaLop";
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@MaLop", MaLop);
-                SqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                {
                     MGV = reader["MGV"].ToString();
-                    HVT_GV = reader["HoTen"].ToString();
+                    HVT_GV = reader["HVT_GV"].ToString();
                 }
             }
+
             return (HVT_SV, MaLop, TenLop, MaKhoa, TenKhoa, MGV, HVT_GV);
         }
-        public bool CheckPWD(string uid, string pwd)
+
+        public bool CheckAndUpdatePWD(string uid, string pwd, string newPwd)
         {
             try
             {
                 using (SqlConnection conn = new SqlConnection(cnstr))
                 {
-                    string query = "SELECT COUNT(*) FROM TaiKhoan WHERE UID = @uid AND PWD = @pwd";
                     conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
-                    {
-                        cmd.Parameters.Add("uid", SqlDbType.VarChar, 50).Value = uid;
-                        cmd.Parameters.Add("pwd", SqlDbType.VarChar, 50).Value = pwd;
-                        int result = (int)cmd.ExecuteScalar();
-                        if (result > 0) return true;
-                        else return false;
-                    }
+                    SqlCommand cmd = new SqlCommand("CheckAndUpdatePWD", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@uid", uid);
+                    cmd.Parameters.AddWithValue("@pwd", pwd);
+                    cmd.Parameters.AddWithValue("@newPwd", newPwd);
+                    SqlParameter outputParam = new SqlParameter("@result", SqlDbType.Bit);
+                    outputParam.Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add(outputParam);
+                    cmd.ExecuteNonQuery();
+                    bool result = (bool)outputParam.Value;
+                    return result;
                 }
             }
             catch
@@ -202,25 +149,8 @@ namespace dll_connectSQL
                 return false;
             }
         }
-        public bool updatePWD(string uid, string pwd)
-        {
-            using (SqlConnection conn = new SqlConnection(cnstr))
-            {
-                string query = @"
-                UPDATE TaiKhoan
-                SET pwd = @NewPassword
-                WHERE uid = @uid";
-                conn.Open();
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@NewPassword", pwd);
-                    cmd.Parameters.AddWithValue("@uid", uid);
-                    int result = cmd.ExecuteNonQuery();
-                    if (result > 0) return true;
-                    else return false;
-                }
-            }
-        }
+
+
         public int[] getDiemSV(string MB_SV)
         {
             int[] SV = new int[33];
@@ -291,39 +221,45 @@ namespace dll_connectSQL
             return KHOA;
         }
 
-        public (List<string>, List<string>) getHK()
+        public (List<string>, List<string>) GetHK()
         {
             var MaHK = new List<string>();
             var TenHK = new List<string>();
-            string query = "SELECT [MaHK],[TenHK] FROM Hocky";
+
             using (SqlConnection conn = new SqlConnection(cnstr))
             {
                 conn.Open();
-                using (SqlCommand command = new SqlCommand(query, conn))
+                using (SqlCommand cmd = new SqlCommand("GetHocky", conn))
                 {
-                    SqlDataReader reader = command.ExecuteReader();
-                    while (reader.Read())
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        MaHK.Add(reader["MaHK"].ToString());
-                        TenHK.Add(reader["TenHK"].ToString());
+                        while (reader.Read())
+                        {
+                            MaHK.Add(reader["MaHK"].ToString());
+                            TenHK.Add(reader["TenHK"].ToString());
+                        }
                     }
-                    reader.Close();
                 }
             }
             return (MaHK, TenHK);
         }
+
 
         public (string, string, string) getMaBang(string MSV, string MaHK)
         {
             string MB_SV = null, MB_CVHT = null, MB_Khoa = null;
             using (SqlConnection conn = new SqlConnection(cnstr))
             {
-                string query = "SELECT MB_SV, MB_CVHT, MB_Khoa FROM Diem_RL WHERE MSV = @MSV AND MaHK = @MaHK";
+                string query = "GetMB";
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@MSV", MSV);
                     cmd.Parameters.AddWithValue("@MaHK", MaHK);
+
                     SqlDataReader reader = cmd.ExecuteReader();
                     if (reader.Read())
                     {
@@ -336,6 +272,7 @@ namespace dll_connectSQL
                 return (MB_SV, MB_CVHT, MB_Khoa);
             }
         }
+
         public bool UpdateDiemSV(int[] Diem, string MB)
         {
             string checkQuery = "SELECT COUNT(*) FROM DG_SV WHERE MB_SV = @MB_SV";
@@ -556,15 +493,16 @@ namespace dll_connectSQL
         }
         public DataTable DS_sinhvien(string MaLop)
         {
-            string query = "SELECT [MSV], [HoTen] FROM Thongtin_SV where MaLop = @MaLop";
+            string query = "GetDSSV";
             DataTable dataTable = new DataTable();
-
             using (SqlConnection conn = new SqlConnection(cnstr))
             {
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@MaLop", MaLop);
+
                     using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
                     {
                         adapter.Fill(dataTable);
@@ -573,9 +511,10 @@ namespace dll_connectSQL
             }
             return dataTable;
         }
+
         public DataTable DS_Lop(string MaKhoa)
         {
-            string query = "SELECT [MaLop], [TenLop] FROM Lop where MaKhoa = @MaKhoa";
+            string query = "GetDSCLASS";
             DataTable dataTable = new DataTable();
 
             using (SqlConnection conn = new SqlConnection(cnstr))
@@ -583,7 +522,9 @@ namespace dll_connectSQL
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@MaKhoa", MaKhoa);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@MaKhoa", MaKhoa); 
+
                     using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
                     {
                         adapter.Fill(dataTable);
@@ -592,17 +533,17 @@ namespace dll_connectSQL
             }
             return dataTable;
         }
-        public DataTable GetMinhchung(string MSV, string MaHK, string Tieuchi)
+
+        public DataTable GetMinhchung(int id)
         {
             DataTable imagesTable = new DataTable();
             using (SqlConnection conn = new SqlConnection(cnstr))
             {
                 conn.Open();
-                using (SqlCommand cmd = new SqlCommand("SELECT Anh FROM Minhchung WHERE MSV = @MSV AND MaHK = @MaHK AND Tieuchi = @Tieuchi ", conn))
+                using (SqlCommand cmd = new SqlCommand("GetMinhChung", conn))
                 {
-                    cmd.Parameters.AddWithValue("@MSV", MSV);
-                    cmd.Parameters.AddWithValue("@MaHK", MaHK);
-                    cmd.Parameters.AddWithValue("@Tieuchi", Tieuchi);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("id", id);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         imagesTable.Load(reader);
@@ -611,19 +552,68 @@ namespace dll_connectSQL
             }
             return imagesTable;
         }
+
         public void LuuMinhchung(string MSV, string MaHK, string Tieuchi, byte[] imageData)
         {
             using (SqlConnection conn = new SqlConnection(cnstr))
             {
                 conn.Open();
-                using (SqlCommand cmd = new SqlCommand("INSERT INTO Minhchung (MSV, MaHK, Tieuchi, Anh) VALUES (@MSV, @MaHK, @Tieuchi, @ImageData)", conn))
+                using (SqlCommand cmd = new SqlCommand("LuuMinhChung", conn))
                 {
-                    cmd.Parameters.Add("@ImageData", SqlDbType.VarBinary).Value = imageData;
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@MSV", MSV);
                     cmd.Parameters.AddWithValue("@MaHK", MaHK);
                     cmd.Parameters.AddWithValue("@Tieuchi", Tieuchi);
+                    cmd.Parameters.Add("@ImageData", SqlDbType.VarBinary).Value = imageData;
+
                     cmd.ExecuteNonQuery();
                 }
+            }
+        }
+
+        public List<int> LayAnh(string MSV, string MaHK, string Tieuchi)
+        {
+            var Anh = new List<int>();
+            string query = "SELECT id FROM Minhchung where MSV=@MSV AND MaHK=@MaHK AND Tieuchi=@Tieuchi";
+            using (SqlConnection conn = new SqlConnection(cnstr))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@MSV", MSV);
+                    cmd.Parameters.AddWithValue("@MaHK", MaHK);
+                    cmd.Parameters.AddWithValue("@Tieuchi", Tieuchi);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Anh.Add((int)reader["id"]);
+                        }
+                    }
+                }
+            }
+            return Anh;
+        }
+        public bool XoaMinhchung(int id)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(cnstr))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("XoaMinhchung", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("id", id);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
     }
