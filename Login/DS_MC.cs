@@ -94,6 +94,7 @@ namespace Login
                 ROW = -1;
                 return;
             }
+            ROW = e.RowIndex;
             id = (int)DGV.Rows[e.RowIndex].Cells[1].Value;
         }
 
